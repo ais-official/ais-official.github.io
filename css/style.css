@@ -1,6 +1,4 @@
 :root {
-	--hero-img-size: 320px;
-    --release-img-size: 140px;
     --bg: #121212;
     --surface: #181818;
     --surface-hover: #232323;
@@ -70,7 +68,7 @@ nav a:hover {
 
 .hero-grid {
     display: grid;
-    grid-template-columns: var(--hero-img-size) 1fr;
+    grid-template-columns: 1fr;
     gap: 48px;
     align-items: center;
 }
@@ -142,7 +140,7 @@ h2 {
 
 .release {
     display: grid;
-    grid-template-columns: var(--release-img-size) 1fr;
+    grid-template-columns: 1fr;
     gap: 24px;
 }
 
@@ -175,10 +173,6 @@ footer {
 }
 
 @media (max-width:768px) {
-	:root {
-        --hero-img-size: 200px;    /* Hero画像を小さく */
-        --release-img-size: 100px; /* Release画像をさらに小さく */
-    }
 
 	.hero-grid {
 	    grid-template-columns: 1fr;
