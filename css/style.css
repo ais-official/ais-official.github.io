@@ -1,0 +1,182 @@
+:root {
+    --bg:#121212;
+    --surface:#181818;
+    --surface-hover:#232323;
+    --text:#ffffff;
+    --sub:#b3b3b3;
+    --accent:#1db954;
+    --border:#2a2a2a;
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,Arial,sans-serif;
+    line-height:1.7;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+.container {
+    width:min(1100px,92%);
+    margin:auto;
+}
+
+header {
+    border-bottom:1px solid var(--border);
+}
+
+header .container {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 0;
+}
+
+.logo {
+    font-size:2rem;
+    font-weight:700;
+    letter-spacing:.08em;
+}
+
+nav {
+    display:flex;
+    gap:24px;
+}
+
+nav a {
+    color:var(--sub);
+}
+
+nav a:hover {
+    color:var(--text);
+}
+
+.hero {
+    padding:80px 0;
+}
+
+.hero-grid {
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:48px;
+    align-items:center;
+}
+
+.cover {
+    width:100%;
+    max-width:320px;
+    aspect-ratio:1;
+    overflow:hidden;
+    border-radius:12px;
+}
+
+.cover img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.hero h1 {
+    font-size:3rem;
+    margin-bottom:12px;
+}
+
+.hero p {
+    color:var(--sub);
+    margin-bottom:28px;
+    max-width:650px;
+}
+
+.buttons {
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+}
+
+.button {
+    padding:14px 24px;
+    border-radius:999px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:700;
+}
+
+.button.secondary {
+    background:var(--surface);
+    border:1px solid var(--border);
+}
+
+.button:hover {
+    opacity:.9;
+}
+
+section{
+    padding:60px 0;
+}
+
+h2 {
+    margin-bottom:24px;
+    font-size:2rem;
+}
+
+.card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+}
+
+.release {
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+}
+
+.release-cover {
+    aspect-ratio:1;
+    background:#252525;
+    border-radius:8px;
+}
+
+footer {
+    border-top:1px solid var(--border);
+    color:var(--sub);
+    text-align:center;
+    padding:40px 0;
+    margin-top:60px;
+}
+
+@media (max-width:768px) {
+
+	.hero-grid {
+	    grid-template-columns:1fr;
+	}
+
+	.cover {
+	    margin:0 auto;
+	}
+
+	.release {
+	    grid-template-columns:1fr;
+	}
+
+	nav {
+	    display:none;
+	}
+
+	.hero h1 {
+	    font-size:2.2rem;
+	}
+
+}
