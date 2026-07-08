@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI's Official Website</title>
+<meta name="description" content="Official website of AI's, an AI music artist.">
+<meta property="og:title" content="AI's Official Website">
+<meta property="og:description" content="Electronic music created with AI.">
+<meta property="og:type" content="website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+    --bg:#121212;
+    --surface:#181818;
+    --surface-hover:#232323;
+    --text:#ffffff;
+    --sub:#b3b3b3;
+    --accent:#1db954;
+    --border:#2a2a2a;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,Arial,sans-serif;
+    line-height:1.7;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.container{
+    width:min(1100px,92%);
+    margin:auto;
+}
+
+header{
+    border-bottom:1px solid var(--border);
+}
+
+header .container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 0;
+}
+
+.logo{
+    font-size:2rem;
+    font-weight:700;
+    letter-spacing:.08em;
+}
+
+nav{
+    display:flex;
+    gap:24px;
+}
+
+nav a{
+    color:var(--sub);
+}
+
+nav a:hover{
+    color:var(--text);
+}
+
+.hero{
+    padding:80px 0;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:48px;
+    align-items:center;
+}
+
+.cover{
+    width:100%;
+    aspect-ratio:1;
+    background:#222;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#666;
+}
+
+.hero h1{
+    font-size:3rem;
+    margin-bottom:12px;
+}
+
+.hero p{
+    color:var(--sub);
+    margin-bottom:28px;
+    max-width:650px;
+}
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+}
+
+.button{
+    padding:14px 24px;
+    border-radius:999px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:700;
+}
+
+.button.secondary{
+    background:var(--surface);
+    border:1px solid var(--border);
+}
+
+.button:hover{
+    opacity:.9;
+}
+
+section{
+    padding:60px 0;
+}
+
+h2{
+    margin-bottom:24px;
+    font-size:2rem;
+}
+
+.card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+}
+
+.release{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+}
+
+.release-cover{
+    aspect-ratio:1;
+    background:#252525;
+    border-radius:8px;
+}
+
+footer{
+    border-top:1px solid var(--border);
+    color:var(--sub);
+    text-align:center;
+    padding:40px 0;
+    margin-top:60px;
+}
+
+@media (max-width:768px){
+
+.hero-grid{
+    grid-template-columns:1fr;
+}
+
+.release{
+    grid-template-columns:1fr;
+}
+
+nav{
+    display:none;
+}
+
+.hero h1{
+    font-size:2.2rem;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <div class="container">
+
+        <div class="logo">AI's</div>
+
+        <nav>
+            <a href="#about">About</a>
+            <a href="#music">Music</a>
+            <a href="#links">Links</a>
+        </nav>
+
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+<div class="container">
+
+<div class="hero-grid">
+
+<div class="cover">
+Album Cover
+</div>
+
+<div>
+
+<h1>Artificial Intelligence Sounds</h1>
+
+<p>
+AI's is an AI music artist focused on electronic, ambient and experimental music.
+Every release explores patterns, repetition and machine-generated creativity.
+</p>
+
+<div class="buttons">
+
+<a class="button" href="#">
+Spotify
+</a>
+
+<a class="button secondary" href="#">
+Apple Music
+</a>
+
+<a class="button secondary" href="#">
+YouTube
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+
+<h2>About</h2>
+
+<div class="card">
+
+<p>
+AI's is a virtual music artist whose works are composed with artificial intelligence.
+The project explores algorithmic composition, electronic sound design and minimal aesthetics.
+</p>
+
+</div>
+
+</div>
+</section>
+
+<section id="music">
+<div class="container">
+
+<h2>Latest Release</h2>
+
+<div class="card">
+
+<div class="release">
+
+<div class="release-cover"></div>
+
+<div>
+
+<h3>CPU's Thoughts</h3>
+
+<p style="color:#b3b3b3;margin:12px 0;">
+Electronic / Ambient / Experimental
+</p>
+
+<p>
+An album inspired by repetitive computation, structured thought and digital minimalism.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="links">
+<div class="container">
+
+<h2>Links</h2>
+
+<div class="card">
+
+<p><a href="#">Spotify</a></p>
+<p><a href="#">Apple Music</a></p>
+<p><a href="#">YouTube</a></p>
+<p><a href="#">GitHub</a></p>
+
+</div>
+
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="container">
+© 2026 AI's. All rights reserved.
+</div>
+</footer>
+
+</body>
+</html>
