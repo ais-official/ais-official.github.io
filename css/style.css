@@ -74,7 +74,7 @@ nav a:hover {
 
 .cover {
     width:100%;
-    max-width:320px;
+    max-width:512px;
     aspect-ratio:1;
     overflow:hidden;
     border-radius:12px;
