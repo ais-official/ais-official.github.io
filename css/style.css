@@ -75,7 +75,7 @@ nav a:hover {
 
 .cover {
     width: 100%;
-    max-width: 512px;
+    max-width: 320px;
     aspect-ratio: 1;
     overflow: hidden;
     border-radius: 12px;
@@ -148,6 +148,8 @@ h2 {
     aspect-ratio: 1;
     background: #252525;
     border-radius: 8px;
+	width: 100%;
+    max-width: 320px;
 }
 
 .release-cover img {
