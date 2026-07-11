@@ -94,14 +94,16 @@ function drawPetal(size) {
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
-  if (getAudioContext().state !== 'running') {
-    getAudioContext().resume();
-  }
-  if (song.isPlaying()) {
-    song.pause();
-    playBtn.html('▶');
-  } else {
-    song.play();
-    playBtn.html('■');
-  }
+  // 「ブラウザの許可が出てから」再生処理を動かす
+  userStartAudio().then(() => {
+    if (song.isPlaying()) {
+      song.pause();
+      noLoop(); 
+      playBtn.html('▶');
+    } else {
+      song.play();
+      loop(); 
+      playBtn.html('■');
+    }
+  });
 }
