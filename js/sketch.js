@@ -10,7 +10,8 @@ function preload() {
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
 function setup() {
   // 400x400のキャンバスを作ります
-  let canvas = createCanvas(400, 400);
+  let w = min(windowWidth * 0.9, 400);
+  let canvas = createCanvas(w, w); // 正方形で生成
 
   /*HTMLの id="p5-canvas" の箱の中にキャンバスを入れます*/
   canvas.parent('p5-canvas');
