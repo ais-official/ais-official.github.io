@@ -117,6 +117,16 @@ nav a:hover {
 }
 
 /*ボタン*/
+#play-btn {
+	background-color: #121212;
+	color: white;
+    text-rendering: optimizeLegibility;
+    -webkit-text-stroke: 0px transparent; 
+    text-shadow: none;
+    font-family: sans-serif;
+	padding: 0 4px;
+	border: none;
+}
 .buttons {
     display: flex;
     flex-wrap: wrap;
@@ -143,22 +153,6 @@ button.button {
   appearance: none;
 }
 
-
-.release {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 24px;
-}
-
-.release .cover {
-    aspect-ratio: 1;
-    background: #252525;
-    border-radius: 8px;
-}
-
-#album ol li {
-    margin: 0;
-}
 
 /*フッター*/
 footer {
@@ -191,7 +185,6 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
 }
 #p5-canvas canvas {
     border-radius: 8px;
