@@ -3,119 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>AI's Official Website | AIミュージックアーティスト</title>
     <meta name="description" content="AIミュージックアーティスト「AI's（アイズ）」の公式サイト。AIが紡ぎ出すポップ・ロックサウンドをお届けします。">
     <meta property="og:title" content="AI's Official Website">
     <meta property="og:description" content="AIが作詞・作曲・歌唱する、ポップ・ロックサウンドの新しい形。">
     <meta property="og:type" content="website">
-    
-    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 
 <body>
 <!-- ページヘッダー -->
 <header>
-    <div class="container">
-        <div class="logo">AI's</div>
-        <!-- メニュー（PCのみ） -->
-        <nav class="menu">
-            <a href="#about">About</a>
-            <a href="#music">Music</a>
-            <a href="#links">Links</a>
-        </nav>
-        <!-- 言語切り替え -->
-        <nav class="lang">
-            <a href="/en/">English</a>
-        </nav>
-    </div>
+<div class="container">
+    <div class="logo">AI's</div>
+    <!-- メニュー（PCのみ） -->
+    <nav class="menu">
+        <a href="#about">About</a>
+        <a href="#music">Music</a>
+        <a href="#links">Links</a>
+    </nav>
+    <!-- 言語切り替え -->
+    <nav class="lang">
+        <a href="/en/">English</a>
+    </nav>
+</div>
 </header>
 
 <!-- メイン -->
 <main>
 
 <section class="hero">
-    <div class="container">
-        <div class="hero-grid">
-            <div class="cover">
-                <img src="/images/dawn-for-asparagus-web.jpg" alt="Dawn for Asparagus Album Cover">
-            </div>
-            <div>
-                <h1>Artificial Intelligence Sounds</h1>
-                <p>
-                AI's（アイズ）は、AIが作詞・作曲したポップ・ロックサウンドを歌う女性ボーカルのAIアーティストです。
-                </p>
-                <div class="buttons">
-                    <a class="button" href="#">Spotify</a>
-                    <a class="button secondary" href="#">Apple Music</a>
-                    <a class="button secondary" href="#">YouTube</a>
-                </div>
-            </div>
+<div class="container">
+	<div id="p5-canvas"></div>
+	<div style="text-align: center;">
+		<button id="play-btn" class="button">▶</button>
+	</div>
+    <div class="grid">
+		<!-- キャンバスとボタンを一つのブロックにまとめる -->
+		<div class="hero-left">
+			<h1>Artificial Intelligence Sounds</h1>
+		</div>
+        <div>
+            <p>
+            AI's（アイズ）は、AIが作詞・作曲したポップ・ロックサウンドを歌う女性ボーカルのAIアーティストです。
+            </p>
+			<div class="buttons">
+				<a class="button" href="#">Spotify</a>
+				<a class="button secondary" href="#">AppleMusic</a>
+				<a class="button secondary" href="#">YouTube</a>
+			</div>
         </div>
     </div>
+</div>
 </section>
 
 <section id="about">
-    <div class="container">
-        <h2>About</h2>
-        <div class="card">
-            <p>
-            AIが紡ぎ出す言葉、メロディ、そして歌声。
-            AI'sの楽曲は、生成された音と言葉のリアルをそのまま活かしてアレンジしています。
-            AIのピュアな感性が生みだしたポップ・ロックサウンドの新しい形です。
-            </p>
-        </div>
+<div class="container">
+    <h2>About</h2>
+    <div class="card">
+        <p>AIが紡ぎ出す言葉、メロディ、そして歌声。AI'sの楽曲は、生成された音と言葉のリアルをそのまま活かしてアレンジしています。
+        AIのピュアな感性が生みだしたポップ・ロックサウンドの新しい形です。</p>
     </div>
+</div>
 </section>
 
-<section id="music">
-    <div class="container">
-        <h2>Latest Release</h2>
-        <div class="card">
-            <div class="release">
-                <div class="release-cover">
-                    <img src="/images/tokyo-web.jpg" alt="最新シングル Tokyo ジャケット画像">
-                </div>
-                <div>
-                    <h3>TOKYO<span class="badge">prerelease / work in progress</span></h3>
-                    <p style="color: #b3b3b3; margin: 12px 0;">
-                    Synth-pop / Electro Rock
-                    </p>
-                    <p>
-                    東京で生きる「私たち」はどこへ向かっているのか、眠らない巨大都市にもまた明日が来る。
-                    </p>
-                    <div class="buttons" style="margin-top: 16px;">
-                        <a class="button" href="/audio/tokyo.mp3" download="tokyo-prerelease.mp3">
-                            Download
-                        </a>
-                    </div>
-                </div>
+<section id="album">
+<div class="container">
+    <h2>Album</h2>
+    <div class="card grid">
+        <div class="cover">
+            <img src="./images/dawn-for-asparagus-web.jpg" alt="Dawn for Asparagus Album Cover">
+        </div>
+        <div>
+            <h3>アスパラガスの夜明け</h3>
+            <ol>
+                <li>Refrection</li>
+                <li>点になる</li>
+                <li>CPUの思考</li>
+                <li>ただの面陳</li>
+                <li>やわらかな檻</li>
+                <li>花びらが踊り出す</li>
+                <li>イクナンガク</li>
+                <li>アスパラガスの夜明け</li>
+                <li>スクランブル・ダンス</li>
+                <li>終わらない旅</li>
+                <li>独女ロック</li>
+            </ol>
+        </div>
+    </div>
+</div>
+</section>
+
+<section id="single">
+<div class="container">
+
+    <h2>Single</h2>
+	<!--シングル1-->
+	<div class="card grid">
+		<div class="cover">
+			<img src="./images/tadano-menchin-web.jpg" alt="最新シングル「ただの面陳」ジャケット画像">
+		</div>
+		<div>
+			<h3>ただの面陳</h3>
+			<p style="color: #b3b3b3; margin: 12px 0;">
+			Electronic Rock
+			</p>
+			<p>LINEやSNSで告白して恋をする時代。「距離は消え キス感だけ残る」ような関係性は、その他大勢の並びの一つに過ぎない。そう、私たちはただの面陳。</p>
+		</div>
+	</div>
+	<!--シングル2-->
+	<div class="card grid">
+        <div class="cover">
+            <img src="./images/solo-girl-rock-web.jpg" alt="最新シングル「独女ロック」ジャケット画像">
+        </div>
+        <div>
+            <h3>独女ロック</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Rock'n'Roll
+            </p>
+            <p>東横線の大倉山か綱島あたり、二階建て外階段のアパートに住むちょっとズボラで陰キャな独身女子。でも見知らぬ人の靴下をいじっちゃうハートはロックンロール。</p>
+        </div>
+    </div>
+	<!--シングル3-->
+    <div class="card grid">
+        <div class="cover">
+            <img src="./images/cpu-thought-web.jpg" alt="最新シングル「CPUの思考」ジャケット画像">
+        </div>
+        <div>
+            <h3>CPUの思考</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Synth-pop / Electronic Rock
+            </p>
+            <p>ひたすら木構造を数え、無意味な配列を修復し、演算結果を検証する。プログラム実行中のCPUの思考がビートに乗って、すべてのエンジニア心をキックで震わせる。</p>
+        </div>
+    </div>
+
+
+
+    <h2>Prerelease</h2>
+    <div class="card grid">
+        <div class="cover">
+            <img src="./images/tokyo-web.jpg" alt="プレリリース「TOKYO」ジャケット画像">
+        </div>
+        <div>
+            <h3>TOKYO</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Synth-pop / Tech-house
+            </p>
+            <p>東京で生きる「私たち」はどこへ向かっているのか。マクロとミクロの視点が交錯するエモーショナルなシンセポップ。眠らない巨大都市にもまた明日が来る。</p>
+            <div class="buttons" style="margin-top: 16px;">
+                <a class="button" href="/audio/tokyo.mp3" download="tokyo-prerelease.mp3">
+                    Download
+                </a>
             </div>
         </div>
     </div>
+
+</div>
+</section>
+
+<section id="license">
+<div class="container">
+    <h2>License</h2>
+    <div class="card">
+        <p>AI'sの楽曲（作詞・作曲・編曲・歌唱など）に関する一切の権利は、当プロジェクトに帰属します。</p>
+        <p>「AIの創作物には著作権がない」という一般的な誤解もありますが、当プロジェクトでは、AIとクリエイターが一体となって生み出した表現の権利と、その独自性を全面的に支持・保護しています。</p>
+        </p>
+    </div>
+    <h3>Non-JASRAC</h3>
+    <div class="card">
+        <p>当プロジェクトの楽曲はJASRAC等の管理団体に信託していません。利用許諾については直接お問い合わせください。</p>
+    </div>
+</div>
 </section>
 
 <section id="links">
-    <div class="container">
-        <h2>Links</h2>
-        <div class="card">
-            <p><a href="#">Spotify</a></p>
-            <p><a href="#">Apple Music</a></p>
-            <p><a href="#">YouTube</a></p>
-            <p><a href="#">GitHub</a></p>
-        </div>
+<div class="container">
+    <h2>Links</h2>
+    <div class="card">
+        <p><a href="#">Spotify</a></p>
+        <p><a href="#">Apple Music</a></p>
+        <p><a href="#">YouTube</a></p>
+        <p><a href="#">GitHub</a></p>
     </div>
+</div>
 </section>
 
 </main>
 
 <!-- フッター -->
 <footer>
-    <div class="container">
-    © 2026 AI's. All rights reserved.
-    </div>
+<div class="container">
+© 2026 AI's. All rights reserved.
+</div>
 </footer>
+
+<!-- 1. p5.js本体 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<!-- 2. p5.sound（音響解析用ライブラリ）★新しく追加 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+<!-- 3. あなたのコード -->
+<script src="./js/sketch.js"></script>
 
 </body>
 </html>
