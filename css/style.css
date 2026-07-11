@@ -187,8 +187,6 @@ footer {
     align-items: center;
 }
 #p5-canvas canvas {
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     max-width: 100%;
     height: auto !important;
 }
