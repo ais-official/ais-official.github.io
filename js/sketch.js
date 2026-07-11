@@ -98,6 +98,6 @@ function togglePlay() {
     playBtn.html('▶');
   } else {
     song.play();
-    playBtn.html('⏸');
+    playBtn.html('■');
   }
 }
