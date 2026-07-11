@@ -1,5 +1,4 @@
 :root {
-    --bg: #121212;
     --surface: #181818;
     --surface-hover: #232323;
     --text: #ffffff;
@@ -7,80 +6,88 @@
     --accent: #1db954;
     --border: #2a2a2a;
 }
-
 * {
-    margin: 0;
+    font-size: 1rem;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
-    background: var(--bg);
+    background: #121212;
     color: var(--text);
     font-family: Inter,Arial,sans-serif;
     line-height: 1.7;
 }
-
 a {
     color: inherit;
     text-decoration: none;
 }
-
 .container {
-    width: 92%;
-    max-width: 960px;
-    margin: 0 auto;
+    width: min(768px,92%);
+    margin: auto;
+}
+section {
+    padding: 60px 0;
+	margin-bottom: 2rem;
+}
+ol {
+	padding-left: 2rem;
 }
 
+/*見出し*/
+h2 {
+    font-size: 2.2rem;
+	margin-bottom: 1rem;
+}
+h3 {
+	font-size: 1.4rem;
+}
+
+/*カード*/
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+	margin-bottom: 1rem;
+}
+
+/*ヘッダー部分*/
 header {
     border-bottom: 1px solid var(--border);
 }
-
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 24px 0;
 }
-
 .logo {
     font-size: 2rem;
     font-weight: 700;
     letter-spacing: 0.08em;
 }
 
+/*メニュー*/
 nav {
     display: flex;
     gap: 24px;
 }
-
 nav a {
     color: var(--sub);
 }
-
 nav a:hover {
     color: var(--text);
 }
 
-.hero {
-    padding: 80px 0;
-}
-
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: center;
-}
-
+/*メイン*/
+/*共通*/
 .cover {
     width: 100%;
-    max-width: 640px;
+    max-width: 320px;
     aspect-ratio: 1;
     overflow: hidden;
     border-radius: 12px;
 }
-
 .cover img {
     width: 100%;
     height: 100%;
@@ -88,23 +95,33 @@ nav a:hover {
     display: block;
 }
 
+/*ヒーロー部分*/
+.hero {
+    padding: 0;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1rem;
+    align-items: center;
+}
 .hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+	line-height: 1.4;
     margin-bottom: 12px;
 }
-
 .hero p {
     color: var(--sub);
     margin-bottom: 28px;
     max-width: 650px;
 }
 
+/*ボタン*/
 .buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
 }
-
 .button {
     padding: 14px 24px;
     border-radius: 999px;
@@ -112,60 +129,38 @@ nav a:hover {
     color: #fff;
     font-weight: 700;
 }
-
 .button.secondary {
     background: var(--surface);
     border: 1px solid var(--border);
 }
-
 .button:hover {
     opacity: 0.9;
 }
-
-section{
-    padding: 60px 0;
+button.button {
+  box-shadow: none;
+  border: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-h2 {
-    margin-bottom: 24px;
-    font-size: 2rem;
-}
-
-.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-}
 
 .release {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 140px 1fr;
     gap: 24px;
 }
 
-.release-cover {
+.release .cover {
     aspect-ratio: 1;
     background: #252525;
     border-radius: 8px;
-	width: 100%;
-    max-width: 320px;
 }
 
-.release-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 8px;
+#album ol li {
+    margin: 0;
 }
 
-.badge {
-	font-size: 1rem;
-	font-weight: normal;
-	padding: 2px 6px;
-}
-
+/*フッター*/
 footer {
     border-top: 1px solid var(--border);
     color: var(--sub);
@@ -174,26 +169,33 @@ footer {
     margin-top: 60px;
 }
 
+/*メディア*/
 @media (max-width:768px) {
-
-	.hero-grid {
+	.grid {
 	    grid-template-columns: 1fr;
 	}
-
 	.cover {
 	    margin: 0 auto;
 	}
-
 	.release {
 	    grid-template-columns: 1fr;
 	}
-
-	nav.menu {
+	nav {
 	    display: none;
 	}
+}
 
-	.hero h1 {
-	    font-size: 2.2rem;
-	}
 
+/* p5.js*/
+#p5-canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+#p5-canvas canvas {
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    max-width: 100%;
+    height: auto !important;
 }
