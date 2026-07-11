@@ -4,7 +4,7 @@ let playBtn;
 
 /*音楽ファイル（mp3）を事前に読み込む。*/
 function preload() {
-  song = loadSound('./audio/tokyo.mp3');
+  //song = loadSound('./audio/tokyo.mp3');
 }
 
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
@@ -15,6 +15,7 @@ function setup() {
 
   /*HTMLの id="p5-canvas" の箱の中にキャンバスを入れます*/
   canvas.parent('p5-canvas');
+  song = loadSound('./audio/tokyo.mp3');
 
   fft = new p5.FFT();
   playBtn = select('#play-btn');
