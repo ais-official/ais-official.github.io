@@ -118,11 +118,12 @@ function togglePlay() {
   }
 
   // ブラウザが「画面が戻ってきた」ことを検知する関数
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") {
-    // 画面が戻った瞬間、オーディオが止まっていたらボタンを「▶」に戻す
-    if (!song.isPlaying()) {
-      playBtn.html('▶');
-    }
-  }
-});
+  document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState === "visible") {
+	  setTimeout(() => {
+		if (!song.isPlaying()) {
+		  playBtn.html('▶');
+		}
+	  }, 100);
+	}
+  });
