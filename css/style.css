@@ -185,6 +185,9 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: min(90vw, 400px);
+    height: min(90vw, 400px);
+    margin: 0 auto;
 }
 #p5-canvas canvas {
     max-width: 100%;
