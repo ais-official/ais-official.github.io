@@ -15,11 +15,22 @@ function setup() {
 
   /*HTMLの id="p5-canvas" の箱の中にキャンバスを入れます*/
   canvas.parent('p5-canvas');
-  song = loadSound('./audio/tokyo.mp3');
+
+  song = loadSound('./audio/tokyo.mp3', () => {
+    // 音楽の読み込みが完了したあとに、終了時のコールバックを設定
+    song.onended(resetButton);
+	// 「再生中であること」をOSに強く通知します
+	if ('mediaSession' in navigator) {
+	navigator.mediaSession.playbackState = 'playing';
+	}
+  });
 
   fft = new p5.FFT();
   playBtn = select('#play-btn');
   playBtn.mousePressed(togglePlay);
+
+  noLoop(); // 停止状態で待機
+  background(20, 20, 20); // 初回背景
 }
 
 /*画面を真っ黒に塗りつぶし、音の大きさを計算して、5枚の花びらを描画する。*/
@@ -92,18 +103,24 @@ function drawPetal(size) {
 	endShape();
   }
 
+// 音楽終了時に呼び出される関数
+function resetButton() {
+	noLoop();
+	playBtn.html('▶');
+  }
+
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
-  // 「ブラウザの許可が出てから」再生処理を動かす
-  userStartAudio().then(() => {
-    if (song.isPlaying()) {
-      song.pause();
-      noLoop(); 
-      playBtn.html('▶');
-    } else {
-      song.play();
-      loop(); 
-      playBtn.html('■');
-    }
-  });
-}
+	// 「ブラウザの許可が出てから」再生処理を動かす
+	userStartAudio().then(() => {
+	  if (song.isPlaying()) {
+		song.pause();
+		noLoop(); 
+		playBtn.html('▶');
+	  } else {
+		song.play();
+		loop(); 
+		playBtn.html('■');
+	  }
+	});
+  }
