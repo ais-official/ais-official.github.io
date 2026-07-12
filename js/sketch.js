@@ -17,7 +17,7 @@ function setup() {
   canvas.parent('p5-canvas');
 
   // 【以前の状態を維持】読み込み処理
-  song = loadSound('./audio/tokyo.mp3', () => {
+  song = loadSound('./audio/tokyo.m4a', () => {
     song.onended(resetButton);
   });
 
@@ -120,3 +120,14 @@ function togglePlay() {
 	  }
 	});
   }
+
+  // ブラウザが「画面が戻ってきた」ことを検知する関数
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    // 画面が戻った瞬間、オーディオが止まっていたらボタンを「▶」に戻す
+    if (!song.isPlaying()) {
+      noLoop();
+      playBtn.html('▶');
+    }
+  }
+});
