@@ -71,7 +71,7 @@ function draw() {
         let baseSize = 80;
 		let sK = isPlaying ? map(kick, 0, 180, 0, 80) : baseSize * breath;
         let sB = isPlaying ? map(bass, 0, 255, 80, 130) : baseSize * breath;
-        let sV = isPlaying ? map(vocal, 0, 255, 80, 190) : baseSize * breath;
+        let sV = isPlaying ? map(vocal, 0, 255, 0, 190) : baseSize * breath;
         let sT = isPlaying ? map(treble, 0, 255, 80, 180) : baseSize * breath;
 
         drawPetal(sK);
