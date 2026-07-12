@@ -25,7 +25,7 @@ function setup() {
   playBtn = select('#play-btn');
   playBtn.mousePressed(togglePlay);
 
-  background(20, 20, 20); // 初回背景
+  background(18, 18, 18); // 初回背景
 }
 
 /*画面を真っ黒に塗りつぶし、音の大きさを計算して、5枚の花びらを描画する。*/
