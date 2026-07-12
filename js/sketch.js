@@ -16,13 +16,9 @@ function setup() {
   /*HTMLの id="p5-canvas" の箱の中にキャンバスを入れます*/
   canvas.parent('p5-canvas');
 
+  // 【以前の状態を維持】読み込み処理
   song = loadSound('./audio/tokyo.mp3', () => {
-    // 音楽の読み込みが完了したあとに、終了時のコールバックを設定
     song.onended(resetButton);
-	// 「再生中であること」をOSに強く通知します
-	if ('mediaSession' in navigator) {
-	navigator.mediaSession.playbackState = 'playing';
-	}
   });
 
   fft = new p5.FFT();
