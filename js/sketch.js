@@ -66,7 +66,7 @@ function draw() {
 
         strokeWeight(1);
 		/*色*/
-        stroke(255, 0, 128, 255);
+        stroke(255, 255, 255, 255); // マゼンタ(255, 0, 128, 255)
 
         let baseSize = 80;
 		let sK = isPlaying ? map(kick, 0, 180, 0, 80) : baseSize * breath;
@@ -101,9 +101,10 @@ function drawPetal(size) {
 
 // 音楽終了時に呼び出される関数
 function resetButton() {
-	noLoop();
+	//noLoop();
 	playBtn.html('▶');
   }
+  
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
@@ -111,7 +112,7 @@ function togglePlay() {
 	userStartAudio().then(() => {
 	  if (song.isPlaying()) {
 		song.pause();
-		noLoop(); 
+		loop(); 
 		playBtn.html('▶');
 	  } else {
 		song.play();
