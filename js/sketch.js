@@ -25,7 +25,6 @@ function setup() {
   playBtn = select('#play-btn');
   playBtn.mousePressed(togglePlay);
 
-  noLoop(); // 停止状態で待機
   background(20, 20, 20); // 初回背景
 }
 
@@ -101,10 +100,8 @@ function drawPetal(size) {
 
 // 音楽終了時に呼び出される関数
 function resetButton() {
-	//noLoop();
 	playBtn.html('▶');
   }
-  
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
@@ -112,11 +109,9 @@ function togglePlay() {
 	userStartAudio().then(() => {
 	  if (song.isPlaying()) {
 		song.pause();
-		loop(); 
 		playBtn.html('▶');
 	  } else {
 		song.play();
-		loop(); 
 		playBtn.html('■');
 	  }
 	});
@@ -127,7 +122,6 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     // 画面が戻った瞬間、オーディオが止まっていたらボタンを「▶」に戻す
     if (!song.isPlaying()) {
-      noLoop();
       playBtn.html('▶');
     }
   }
