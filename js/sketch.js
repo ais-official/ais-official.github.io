@@ -14,21 +14,17 @@ function setup() {
     canvas.parent('p5-canvas');
 
     fft = new p5.FFT();
+
     playBtn = select('#play-btn');
 
-    song = createAudio('./audio/tokyo.m4a');
-    song.elt.load();
-    
-    song.elt.addEventListener('canplay', () => {
-        fft.setInput(song);
-        
-        // 【変更点】イベントリスナの登録
-        song.elt.onpause = resetButton; // 一時停止（バックグラウンド移行時含む）したらボタンを戻す
-        song.elt.onended = resetButton; // 曲が最後まで再生し終わったらボタンを戻す
-        
-        playBtn.removeAttribute('disabled');
-        playBtn.elt.textContent = '▶';
-    });
+	song = createAudio('./audio/tokyo.m4a');
+	song.elt.load();
+	song.elt.addEventListener('canplay', () => {
+		fft.setInput(song);
+		song.elt.onended = resetButton;
+		playBtn.removeAttribute('disabled');
+		playBtn.elt.textContent = '▶';
+	});
 
     playBtn.mousePressed(togglePlay);
 
@@ -52,6 +48,17 @@ function togglePlay() {
 		}
 	});
 }
+
+// ブラウザが「画面が戻ってきた」ことを検知する関数
+document.addEventListener("visibilitychange", () => {
+	if (document.visibilityState === "visible") {
+		setTimeout(() => {
+			if (!song.isPlaying()) {
+				playBtn.html('▶');
+			}
+		}, 100);
+	}
+});
 
 /* 毎フレームの制御（全体構成） */
 function draw() {
