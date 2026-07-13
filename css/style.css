@@ -119,8 +119,8 @@ nav a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: min(90vw, var(--canvas-max-size));
-    height: min(90vw, var(--canvas-max-size));
+    width: min(90vw, var(--canvas-size));
+    height: min(90vw, var(--canvas-size));
     margin: 0 auto;
 }
 #p5-canvas canvas {
