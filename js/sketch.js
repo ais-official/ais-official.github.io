@@ -51,13 +51,13 @@ function togglePlay() {
 
 // ブラウザが「画面が戻ってきた」ことを検知する関数
 document.addEventListener("visibilitychange", () => {
-	if (document.visibilityState === "visible") {
-		setTimeout(() => {
-			if (!song.isPlaying()) {
-				playBtn.html('▶');
-			}
-		}, 100);
-	}
+    // 画面が非表示なら何もしない
+    if (document.visibilityState !== "visible") return;
+    setTimeout(() => {
+        // 再生中なら何もしない
+        if (song.isPlaying()) return;
+        playBtn.html('▶');
+    }, 100);
 });
 
 /* 毎フレームの制御（全体構成） */
