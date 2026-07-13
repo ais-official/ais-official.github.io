@@ -17,15 +17,13 @@ function setup() {
 
     playBtn = select('#play-btn');
 
-    song = createAudio('./audio/tokyo.m4a');
-
-    song.elt.addEventListener('canplaythrough', () => {
-        fft.setInput(song);
-        song.elt.onended = resetButton;
-
-        playBtn.removeAttribute('disabled');
-        playBtn.elt.textContent = '▶';
-    });
+	song = createAudio('./audio/tokyo.m4a', () => {
+		fft.setInput(song);
+		song.elt.onended = resetButton;
+	
+		playBtn.removeAttribute('disabled');
+		playBtn.elt.textContent = '▶';
+	});
 
     playBtn.mousePressed(togglePlay);
 
