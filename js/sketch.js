@@ -23,6 +23,7 @@ function setup() {
 		song.elt.onended = resetButton;
 		requestAnimationFrame(() => {
 			playBtn.removeAttribute('disabled');
+			playBtn.elt.textContent = '▶';
 		});
 	});
 
