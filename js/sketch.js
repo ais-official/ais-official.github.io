@@ -95,7 +95,7 @@ document.addEventListener("visibilitychange", () => {
 
 /* 毎フレームの制御（全体構成） */
 function draw() {
-	background(18, 18, 18, 30);
+	background(18, 18, 18, 255);
 	fft.analyze();
 	push();
 	translate(width / 2, height / 2);
