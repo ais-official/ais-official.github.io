@@ -17,11 +17,11 @@ function setup() {
 	fft = new p5.FFT();
 	playBtn = select('#play-btn');
 
-	song = loadSound('./audio/tokyo.m4a', () => {
-		song.onended(resetButton);
+	playBtn.removeAttribute('disabled');
+	playBtn.html('▶');
 
-		playBtn.removeAttribute('disabled');
-		playBtn.html('▶');
+	song = loadSound('./audio/tokyo.m4a', () => {
+		song.onended(resetButton);	
 	});
 	
 	playBtn.mousePressed(togglePlay);
