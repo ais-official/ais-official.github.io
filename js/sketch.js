@@ -17,8 +17,10 @@ function setup() {
 	fft = new p5.FFT();
 	playBtn = select('#play-btn');
 
-	playBtn.removeAttribute('disabled');
-	playBtn.html('▶');
+	setTimeout(() => {
+		playBtn.removeAttribute('disabled');
+		playBtn.html('▶');
+	}, 5000);
 
 	song = loadSound('./audio/tokyo.m4a', () => {
 		song.onended(resetButton);	
