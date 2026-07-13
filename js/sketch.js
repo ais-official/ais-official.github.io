@@ -13,21 +13,22 @@ function setup() {
     let canvas = createCanvas(w, w);
     canvas.parent('p5-canvas');
 
-    // FFTはここで先に初期化する
     fft = new p5.FFT();
-    
+
     playBtn = select('#play-btn');
 
-    song = createAudio('./audio/tokyo.m4a', () => {
-		fft.setInput(song);
-		song.elt.onended = resetButton;
-		requestAnimationFrame(() => {
-			playBtn.removeAttribute('disabled');
-			playBtn.elt.textContent = '▶';
-		});
-	});
+    song = createAudio('./audio/tokyo.m4a');
+
+    song.elt.addEventListener('canplaythrough', () => {
+        fft.setInput(song);
+        song.elt.onended = resetButton;
+
+        playBtn.removeAttribute('disabled');
+        playBtn.elt.textContent = '▶';
+    });
 
     playBtn.mousePressed(togglePlay);
+
     background(18, 18, 18);
 }
 
