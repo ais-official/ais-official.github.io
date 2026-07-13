@@ -21,7 +21,7 @@ function setup() {
     song = createAudio('./audio/tokyo.m4a', () => {
         // ここでは接続のみを行う
         fft.setInput(song);
-        song.onended(resetButton);
+        song.elt.onended = resetButton;
         playBtn.removeAttribute('disabled');
         playBtn.html('▶');
     });
