@@ -47,6 +47,12 @@ function setup() {
     background(18, 18, 18);
 }
 
+function windowResized() {
+    let container = document.getElementById('p5-canvas');
+    let w = container.clientWidth;
+    resizeCanvas(w, w);
+}
+
 // 音楽終了時に呼び出される関数
 function resetButton() {
 	playBtn.html('▶');
@@ -91,25 +97,28 @@ document.addEventListener("visibilitychange", () => {
 function draw() {
 	background(18, 18, 18, 30);
 	fft.analyze();
+	push();
 	translate(width / 2, height / 2);
-	drawFlower();
+	let scaleFactor = width / 400; 
+    drawFlower(scaleFactor);
+	pop();
 }
 
 /* 花全体の配置と描画 */
-function drawFlower() {
-	let numPetals = 5;
-	noFill();
-	stroke(255, 255, 255, 255);
-	for (let i = 0; i < numPetals; i++) {
-		push();
-		rotate(TWO_PI / numPetals * i);
-		// 各パーツの描画
-		drawPetal(getPetalSize('kick'));
-		drawPetal(getPetalSize('vocal1'));
-		drawPetal(getPetalSize('vocal2'));
-		drawPetal(getPetalSize('vocal3'));
-		pop();
-	}
+function drawFlower(scaleFactor) {
+    let numPetals = 5;
+    noFill();
+    stroke(255, 255, 255, 255);
+    for (let i = 0; i < numPetals; i++) {
+        push();
+        rotate(TWO_PI / numPetals * i);
+        // 各パーツにスケールを適用
+        drawPetal(getPetalSize('kick') * scaleFactor);
+        drawPetal(getPetalSize('vocal1') * scaleFactor);
+        drawPetal(getPetalSize('vocal2') * scaleFactor);
+        drawPetal(getPetalSize('vocal3') * scaleFactor);
+        pop();
+    }
 }
 
 /* 花びら1枚の形状定義（不変） */
