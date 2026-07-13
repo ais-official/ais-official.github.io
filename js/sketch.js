@@ -52,15 +52,11 @@ function togglePlay() {
 // ブラウザが「画面が戻ってきた」ことを検知する関数
 document.addEventListener("visibilitychange", () => {
 	if (document.visibilityState !== "visible") {
-		if (!song.elt.paused) {
-			song.pause();
-			song.elt.currentTime = 0;
-			playBtn.html('▶');
-		}
-		return;
+		song.pause();
+		song.elt.currentTime = 0;
+		song.elt.load();
+		playBtn.html('▶');
 	}
-
-	playBtn.html('▶');
 });
 
 /* 毎フレームの制御（全体構成） */
