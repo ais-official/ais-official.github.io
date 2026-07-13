@@ -114,7 +114,31 @@ function drawFlower() {
 		pop();
 	}
 }
+
+/* 花びら1枚の形状定義（不変） */
+function drawPetal(size) {
+	beginShape();
+	vertex(0, 0);
+	bezierVertex(-size * 0.2, -size * 0.3, -size * 0.4, -size * 0.7, 0, -size);
+	bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
+	endShape();
+}
   
+/* 花びらサイズの制御 */
+function getPetalSize(type) {
+	let isPlaying = !song.elt.paused;
+	let baseSize = 128;
+	if (!isPlaying) {
+		return getBreathSize(baseSize);
+	}
+	return getAudioSize(type);
+}
+
+/* 音楽停止中の呼吸サイズ */
+function getBreathSize(baseSize) {
+	return baseSize * getBreath();
+}
+
 /* 呼吸値の計算 */
 function getBreath() {
 	let speed = frameCount * 0.01;
@@ -127,32 +151,49 @@ function getBreath() {
 		return lerp(1.1, 1.0, 0.5 - 0.5 * cos(PI * t));
 	}
 }
-  
-/* 音量や呼吸からサイズを決定 */
-function getPetalSize(type) {
-	let isPlaying = !song.elt.paused;
 
-	let baseSize = 128;
-	if (!isPlaying) return baseSize * getBreath();
-	let val;
-	switch(type) {
-		case 'kick': val = fft.getEnergy(10, 15);   break;
-		case 'vocal1': val = fft.getEnergy(2000, 3000); break;
-		case 'vocal2': val = fft.getEnergy(3000, 5000); break;
-		case 'vocal3': val = fft.getEnergy(5000, 10000); break;
-		default: return baseSize;
+const petalMap = {
+	kick: {
+		range: [10, 15],
+		input: [0, 255],
+		output: [0, 128]
+	},
+	vocal1: {
+		range: [2000, 3000],
+		input: [0, 255],
+		output: [128, 192]
+	},
+	vocal2: {
+		range: [3000, 5000],
+		input: [0, 255],
+		output: [128, 192]
+	},
+	vocal3: {
+		range: [5000, 10000],
+		input: [0, 255],
+		output: [128, 192]
 	}
-	// マッピングの範囲調整
-	let minMap = (type === 'kick') ? 0 : 128;
-	let maxMap = (type === 'kick') ? 128 : 180;
-	return map(val, 0, 255, minMap, maxMap);
+};
+
+/* 音楽によるサイズ */
+function getAudioSize(type) {
+	let val = getAudio(type);
+	let config = petalMap[type];
+	return map(
+		val,
+		config.input[0],
+		config.input[1],
+		config.output[0],
+		config.output[1]
+	);
 }
-  
-/* 花びら1枚の形状定義（不変） */
-function drawPetal(size) {
-	beginShape();
-	vertex(0, 0);
-	bezierVertex(-size * 0.2, -size * 0.3, -size * 0.4, -size * 0.7, 0, -size);
-	bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
-	endShape();
+
+/* 音量値 */
+function getAudio(type) {
+	let config = petalMap[type];
+	if (!config) return 0;
+	return fft.getEnergy(
+		config.range[0],
+		config.range[1]
+	);
 }
