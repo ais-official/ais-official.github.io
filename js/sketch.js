@@ -19,12 +19,13 @@ function setup() {
     playBtn = select('#play-btn');
 
     song = createAudio('./audio/tokyo.m4a', () => {
-        // ここでは接続のみを行う
-        fft.setInput(song);
-        song.elt.onended = resetButton;
-        playBtn.removeAttribute('disabled');
-        playBtn.html('▶');
-    });
+		fft.setInput(song);
+		song.elt.onended = resetButton;
+		requestAnimationFrame(() => {
+			playBtn.removeAttribute('disabled');
+			playBtn.elt.textContent = '▶';
+		});
+	});
 
     playBtn.mousePressed(togglePlay);
     background(18, 18, 18);
