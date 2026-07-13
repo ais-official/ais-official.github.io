@@ -1,6 +1,7 @@
 let song;
 let fft;
 let playBtn;
+const CANVAS_MAX_SIZE = 400;
 
 /*音楽ファイル読み込み（事前に読み込み）*/
 function preload() {
@@ -9,7 +10,7 @@ function preload() {
 
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
 function setup() {
-    let w = min(windowWidth * 0.9, 400);
+    let w = min(windowWidth * 0.9, CANVAS_MAX_SIZE);
     let canvas = createCanvas(w, w);
     canvas.parent('p5-canvas');
 
@@ -105,7 +106,7 @@ function getBreath() {
 function getPetalSize(type) {
 	let isPlaying = !song.elt.paused;
 
-	let baseSize = 80;
+	let baseSize = 128;
 	if (!isPlaying) return baseSize * getBreath();
 	let val;
 	switch(type) {
@@ -116,8 +117,8 @@ function getPetalSize(type) {
 		default: return baseSize;
 	}
 	// マッピングの範囲調整
-	let minMap = (type === 'kick') ? 0 : 90;
-	let maxMap = (type === 'kick') ? 80 : 190;
+	let minMap = (type === 'kick') ? 0 : 128;
+	let maxMap = (type === 'kick') ? 128 : 190;
 	return map(val, 0, 255, minMap, maxMap);
 }
   
