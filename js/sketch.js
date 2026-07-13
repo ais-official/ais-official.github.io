@@ -119,18 +119,42 @@ function drawPetal(size) {
 	bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
 	endShape();
 }
-  
+
+const baseSize = 128;
+
+const petalMap = {
+	kick: {
+		hertz: [10, 15],
+		gain: [0, 255],
+		move: [0, 128]
+	},
+	vocal1: {
+		hertz: [2000, 3000],
+		gain: [0, 255],
+		move: [128, 180]
+	},
+	vocal2: {
+		hertz: [3000, 5000],
+		gain: [0, 255],
+		move: [128, 180]
+	},
+	vocal3: {
+		hertz: [5000, 10000],
+		gain: [0, 255],
+		move: [128, 180]
+	}
+};
+
 /* 花びらサイズの制御 */
 function getPetalSize(type) {
 	let isPlaying = !song.elt.paused;
-	let baseSize = 128;
 	if (!isPlaying) return getBreathSize(baseSize);
 	return getAudioSize(type);
 }
 
 /* 音楽停止中の呼吸サイズ */
-function getBreathSize(baseSize) {
-	return baseSize * getBreath();
+function getBreathSize(size) {
+	return size * getBreath();
 }
 
 /* 呼吸値の計算 */
@@ -145,29 +169,6 @@ function getBreath() {
 		return lerp(1.1, 1.0, 0.5 - 0.5 * cos(PI * t));
 	}
 }
-
-const petalMap = {
-	kick: {
-		hertz: [10, 15],
-		gain: [0, 255],
-		move: [0, 128]
-	},
-	vocal1: {
-		hertz: [2000, 3000],
-		gain: [0, 255],
-		move: [128, 192]
-	},
-	vocal2: {
-		hertz: [3000, 5000],
-		gain: [0, 255],
-		move: [128, 192]
-	},
-	vocal3: {
-		hertz: [5000, 10000],
-		gain: [0, 255],
-		move: [128, 192]
-	}
-};
 
 /* 音楽によるサイズ */
 function getAudioSize(type) {
