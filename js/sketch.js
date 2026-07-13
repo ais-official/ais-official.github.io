@@ -41,7 +41,21 @@ function resetButton() {
 function togglePlay() {
 	userStartAudio().then(() => {
 		if (song.elt.paused) {
+			const FADE_IN_TIME = 1000; // フェードイン時間(ms)
+			const FADE_INTERVAL = 40; // 音量更新間隔(ms)
+			const FADE_STEP = 1 / (FADE_IN_TIME / FADE_INTERVAL);
+
+			song.elt.volume = 0;
 			song.play();
+		
+			let fadeIn = setInterval(() => {
+				if (song.elt.volume < 1) {
+					song.elt.volume = Math.min(song.elt.volume + FADE_STEP, 1);
+				} else {
+					clearInterval(fadeIn);
+				}
+			}, FADE_INTERVAL);
+		
 			playBtn.html('■');
 		} else {
 			song.pause();
