@@ -59,7 +59,7 @@ function togglePlay() {
             let now = audioCtx.currentTime;
             gainNode.gain.cancelScheduledValues(now);
             gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(1, now + 2); // 2秒でフェードイン
+            gainNode.gain.linearRampToValueAtTime(1, now + 3); // 2秒でフェードイン
 
             song.play();
             playBtn.html('■');
@@ -90,18 +90,15 @@ document.addEventListener("visibilitychange", () => {
 function draw() {
 	background(18, 18, 18, 30);
 	fft.analyze();
-
 	translate(width / 2, height / 2);
-	// 全体の流れを記述
 	drawFlower();
-  }
+}
 
 /* 花全体の配置と描画 */
 function drawFlower() {
 	let numPetals = 5;
 	noFill();
 	stroke(255, 255, 255, 255);
-	
 	for (let i = 0; i < numPetals; i++) {
 		push();
 		rotate(TWO_PI / numPetals * i);
@@ -110,7 +107,6 @@ function drawFlower() {
 		drawPetal(getPetalSize('vocal1'));
 		drawPetal(getPetalSize('vocal2'));
 		drawPetal(getPetalSize('vocal3'));
-		
 		pop();
 	}
 }
@@ -128,9 +124,7 @@ function drawPetal(size) {
 function getPetalSize(type) {
 	let isPlaying = !song.elt.paused;
 	let baseSize = 128;
-	if (!isPlaying) {
-		return getBreathSize(baseSize);
-	}
+	if (!isPlaying) return getBreathSize(baseSize);
 	return getAudioSize(type);
 }
 
@@ -154,24 +148,24 @@ function getBreath() {
 
 const petalMap = {
 	kick: {
-		range: [10, 15],
-		input: [0, 255],
-		output: [0, 128]
+		hertz: [10, 15],
+		gain: [0, 255],
+		move: [0, 128]
 	},
 	vocal1: {
-		range: [2000, 3000],
-		input: [0, 255],
-		output: [128, 192]
+		hertz: [2000, 3000],
+		gain: [0, 255],
+		move: [128, 192]
 	},
 	vocal2: {
-		range: [3000, 5000],
-		input: [0, 255],
-		output: [128, 192]
+		hertz: [3000, 5000],
+		gain: [0, 255],
+		move: [128, 192]
 	},
 	vocal3: {
-		range: [5000, 10000],
-		input: [0, 255],
-		output: [128, 192]
+		hertz: [5000, 10000],
+		gain: [0, 255],
+		move: [128, 192]
 	}
 };
 
@@ -181,10 +175,10 @@ function getAudioSize(type) {
 	let config = petalMap[type];
 	return map(
 		val,
-		config.input[0],
-		config.input[1],
-		config.output[0],
-		config.output[1]
+		config.gain[0],
+		config.gain[1],
+		config.move[0],
+		config.move[1]
 	);
 }
 
@@ -193,7 +187,7 @@ function getAudio(type) {
 	let config = petalMap[type];
 	if (!config) return 0;
 	return fft.getEnergy(
-		config.range[0],
-		config.range[1]
+		config.hertz[0],
+		config.hertz[1]
 	);
 }
