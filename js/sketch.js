@@ -132,7 +132,7 @@ function getPetalSize(type) {
 	}
 	// マッピングの範囲調整
 	let minMap = (type === 'kick') ? 0 : 128;
-	let maxMap = (type === 'kick') ? 128 : 190;
+	let maxMap = (type === 'kick') ? 128 : 180;
 	return map(val, 0, 255, minMap, maxMap);
 }
   
