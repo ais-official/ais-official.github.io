@@ -9,38 +9,36 @@ function preload() {
 
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
 function setup() {
-	/* 描画エリア*/
-	let w = min(windowWidth * 0.9, 400);
-	let canvas = createCanvas(w, w);
-	canvas.parent('p5-canvas');
+    let w = min(windowWidth * 0.9, 400);
+    let canvas = createCanvas(w, w);
+    canvas.parent('p5-canvas');
 
-	fft = new p5.FFT();
-	playBtn = select('#play-btn');
+    // FFTはここで先に初期化する
+    fft = new p5.FFT();
+    
+    playBtn = select('#play-btn');
 
-	setTimeout(() => {
-		playBtn.removeAttribute('disabled');
-		playBtn.html('▶');
-	}, 5000);
+    song = createAudio('./audio/tokyo.m4a', () => {
+        // ここでは接続のみを行う
+        fft.setInput(song);
+        song.onended(resetButton);
+        playBtn.removeAttribute('disabled');
+        playBtn.html('▶');
+    });
 
-	song = loadSound('./audio/tokyo.m4a', () => {
-		song.onended(resetButton);	
-	});
-	
-	playBtn.mousePressed(togglePlay);
-
-	background(18, 18, 18); // 初回背景
+    playBtn.mousePressed(togglePlay);
+    background(18, 18, 18);
 }
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
-	// 「ブラウザの許可が出てから」再生処理を動かす
 	userStartAudio().then(() => {
-		if (song.isPlaying()) {
-			song.pause();
-			playBtn.html('▶');
-		} else {
+		if (song.elt.paused) {
 			song.play();
 			playBtn.html('■');
+		} else {
+			song.pause();
+			playBtn.html('▶');
 		}
 	});
 }
@@ -107,7 +105,8 @@ function getBreath() {
   
 /* 音量や呼吸からサイズを決定 */
 function getPetalSize(type) {
-	let isPlaying = song.isPlaying();
+	let isPlaying = !song.elt.paused;
+
 	let baseSize = 80;
 	if (!isPlaying) return baseSize * getBreath();
 	let val;
