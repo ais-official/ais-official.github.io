@@ -1,4 +1,7 @@
 let song;
+let audioCtx;
+let gainNode;
+let source;
 let fft;
 let playBtn;
 const CANVAS_MAX_SIZE = 400;
@@ -15,20 +18,31 @@ function setup() {
     canvas.parent('p5-canvas');
 
     fft = new p5.FFT();
-
     playBtn = select('#play-btn');
 
-	song = createAudio('./audio/tokyo.m4a');
-	song.elt.load();
-	song.elt.addEventListener('canplay', () => {
-		fft.setInput(song);
-		song.elt.onended = resetButton;
-		playBtn.removeAttribute('disabled');
-		playBtn.elt.textContent = '▶';
-	});
+	// 1. AudioContextの作成（Web Audio APIの入り口）
+    audioCtx = getAudioContext();
+    gainNode = audioCtx.createGain();
+    gainNode.gain.value = 0; // 最初は無音
+
+    // 2. 音源の作成と接続
+    song = createAudio('./audio/tokyo.m4a');
+    song.elt.load();
+    
+    song.elt.oncanplaythrough = () => {
+        // 音源をWeb Audio APIのグラフに接続
+        if (!source) {
+            source = audioCtx.createMediaElementSource(song.elt);
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            fft.setInput(gainNode); // FFTをこのルートに繋ぐ
+            playBtn.removeAttribute('disabled');
+            playBtn.elt.textContent = '▶';
+        }
+    };
 
     playBtn.mousePressed(togglePlay);
-
     background(18, 18, 18);
 }
 
@@ -39,29 +53,27 @@ function resetButton() {
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
-	userStartAudio().then(() => {
-		if (song.elt.paused) {
-			const FADE_IN_TIME = 2000; // フェードイン時間(ms)
-			const FADE_INTERVAL = 40; // 音量更新間隔(ms)
-			const FADE_STEP = 1 / (FADE_IN_TIME / FADE_INTERVAL);
+    userStartAudio().then(() => {
+        if (song.elt.paused) {
+            // フェードインのスケジュール
+            let now = audioCtx.currentTime;
+            gainNode.gain.cancelScheduledValues(now);
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(1, now + 2); // 2秒でフェードイン
 
-			song.elt.volume = 0;
-			song.play();
-		
-			let fadeIn = setInterval(() => {
-				if (song.elt.volume < 1) {
-					song.elt.volume = Math.min(song.elt.volume + FADE_STEP, 1);
-				} else {
-					clearInterval(fadeIn);
-				}
-			}, FADE_INTERVAL);
-		
-			playBtn.html('■');
-		} else {
-			song.pause();
-			playBtn.html('▶');
-		}
-	});
+            song.play();
+            playBtn.html('■');
+        } else {
+            // フェードアウトのスケジュール
+            let now = audioCtx.currentTime;
+            gainNode.gain.cancelScheduledValues(now);
+            gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+            gainNode.gain.linearRampToValueAtTime(0, now + 0.5); // 0.5秒でフェードアウト
+            
+            setTimeout(() => song.pause(), 500);
+            playBtn.html('▶');
+        }
+    });
 }
 
 // ブラウザが「画面が戻ってきた」ことを検知する関数
@@ -95,9 +107,9 @@ function drawFlower() {
 		rotate(TWO_PI / numPetals * i);
 		// 各パーツの描画
 		drawPetal(getPetalSize('kick'));
-		drawPetal(getPetalSize('bass'));
-		drawPetal(getPetalSize('vocal'));
-		drawPetal(getPetalSize('treble'));
+		drawPetal(getPetalSize('vocal1'));
+		drawPetal(getPetalSize('vocal2'));
+		drawPetal(getPetalSize('vocal3'));
 		
 		pop();
 	}
@@ -124,10 +136,10 @@ function getPetalSize(type) {
 	if (!isPlaying) return baseSize * getBreath();
 	let val;
 	switch(type) {
-		case 'kick':   val = fft.getEnergy(10, 15);   break;
-		case 'bass':   val = fft.getEnergy(2000, 3000); break;
-		case 'vocal':  val = fft.getEnergy(3000, 5000); break;
-		case 'treble': val = fft.getEnergy(5000, 10000); break;
+		case 'kick': val = fft.getEnergy(10, 15);   break;
+		case 'vocal1': val = fft.getEnergy(2000, 3000); break;
+		case 'vocal2': val = fft.getEnergy(3000, 5000); break;
+		case 'vocal3': val = fft.getEnergy(5000, 10000); break;
 		default: return baseSize;
 	}
 	// マッピングの範囲調整
