@@ -19,7 +19,9 @@ function setup() {
 
 	song = createAudio('./audio/tokyo.m4a');
 
-	song.elt.addEventListener('canplaythrough', () => {
+	song.elt.load();
+
+	song.elt.addEventListener('canplay', () => {
 		fft.setInput(song);
 		song.elt.onended = resetButton;
 
