@@ -13,9 +13,10 @@ function preload() {
 
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
 function setup() {
-    let w = min(windowWidth * 0.9, CANVAS_MAX_SIZE);
-    let canvas = createCanvas(w, w);
-    canvas.parent('p5-canvas');
+    let container = document.getElementById('p5-canvas');
+	let w = container.clientWidth;
+	let canvas = createCanvas(w, w);
+	canvas.parent('p5-canvas');
 
     fft = new p5.FFT();
     playBtn = select('#play-btn');
@@ -131,17 +132,17 @@ const petalMap = {
 	vocal1: {
 		hertz: [2000, 3000],
 		gain: [0, 255],
-		move: [128, 180]
+		move: [128, 200]
 	},
 	vocal2: {
 		hertz: [3000, 5000],
 		gain: [0, 255],
-		move: [128, 180]
+		move: [128, 200]
 	},
 	vocal3: {
 		hertz: [5000, 10000],
 		gain: [0, 255],
-		move: [128, 180]
+		move: [128, 200]
 	}
 };
 
