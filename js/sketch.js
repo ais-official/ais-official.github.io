@@ -54,6 +54,7 @@ document.addEventListener("visibilitychange", () => {
 	if (document.visibilityState !== "visible") {
 		song.pause();
 		song.elt.currentTime = 0;
+		song.elt.load();
 		playBtn.html('▶');
 	}
 });
