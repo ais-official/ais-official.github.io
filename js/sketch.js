@@ -125,37 +125,51 @@ function drawVisualizer() {
     analyserL.getByteFrequencyData(fullDataL);
     analyserR.getByteFrequencyData(fullDataR);
 
-    let binCount =  25;
     let centerX = width / 2;
     let barWidth = 6;
-    let gap =  2;
-	let maxHeight = height * 0.20;
-	let minHeight = song.elt.paused ? 0 : 8;
+    let gap = 2;
+    let maxHeight = height * 0.25;
+
+    // 片側に表示できる最大本数
+    let binCount = floor((centerX - gap / 2) / (barWidth + gap));
+
+    // 0～約8kHzだけを使用
+    let maxIndex = floor(fullDataL.length * 16000 / (audioCtx.sampleRate / 2));
 
     noStroke();
-    
+
     for (let i = 0; i < binCount; i++) {
-        let idx = i * 20;
+
+        // 0～8kHzを均等に割り当て
+        let idx = floor(i * maxIndex / (binCount - 1));
+
         // 中央ほど高く、外側ほど低くする重み
         let weight = map(i, 0, binCount - 1, 1.0, 0.30);
+
+        // 再生中だけ最低高さを保証
+        let minHeight = song.elt.paused ? 0 : 8;
+
         // 左
         let hL = map(fullDataL[idx], 0, 255, minHeight, maxHeight) * weight;
         let xL = centerX - gap / 2 - (i + 1) * barWidth - (i * gap);
+
         for (let y = 0; y < hL; y += 2) {
-			let t = y / hL;
-			let alpha = lerp(255, 26, t * t);
-			fill(255, 255, 255, alpha);
-			rect(xL, height - y, barWidth, 1);
-		}
+            let t = y / hL;
+            let alpha = lerp(255, 26, t * t * t);
+            fill(255, 255, 255, alpha);
+            rect(xL, height - y, barWidth, 1);
+        }
+
         // 右
         let hR = map(fullDataR[idx], 0, 255, minHeight, maxHeight) * weight;
         let xR = centerX + gap / 2 + (i * barWidth) + (i * gap);
+
         for (let y = 0; y < hR; y += 2) {
-			let t = y / hR;
-			let alpha = lerp(255, 26, t * t);
-			fill(255, 255, 255, alpha);
-			rect(xR, height - y, barWidth, 1);
-		}
+            let t = y / hR;
+            let alpha = lerp(255, 26, t * t * t);
+            fill(255, 255, 255, alpha);
+            rect(xR, height - y, barWidth, 1);
+        }
     }
 }
 
