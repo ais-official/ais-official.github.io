@@ -4,6 +4,10 @@ let gainNode;
 let source;
 let fft;
 let playBtn;
+let flowerLayer;
+let energyHistory = [];
+let particles = [];
+let prevEnergy = 0;
 let splitter, analyserL, analyserR;
 const CANVAS_MAX_SIZE = 400;
 
@@ -56,12 +60,14 @@ function setup() {
 
     playBtn.mousePressed(togglePlay);
     background(18, 18, 18);
+	flowerLayer = createGraphics(width, height);
 }
 
 function windowResized() {
     let container = document.getElementById('p5-canvas');
     let w = container.clientWidth;
     resizeCanvas(w, w);
+	flowerLayer = createGraphics(width, height);
 }
 
 // 音楽終了時に呼び出される関数
@@ -109,12 +115,18 @@ function draw() {
 	background(18, 18, 18, 255);
 	fft.analyze();
 
+	// 花レイヤーを少しずつ消して残像を作る
+	flowerLayer.background(18, 18, 18, 60);
+
+	flowerLayer.push();
+	flowerLayer.translate(width / 2, height / 2);
+	let scaleFactor = width / 400;
+	drawFlower(flowerLayer, scaleFactor);
+	flowerLayer.pop();
+
+	image(flowerLayer, 0, 0);
 	drawVisualizer();
-	push();
-	translate(width / 2, height / 2);
-	let scaleFactor = width / 400; 
-    drawFlower(scaleFactor);
-	pop();
+	updateParticles();
 }
 
 function drawVisualizer() {
@@ -128,31 +140,24 @@ function drawVisualizer() {
     let centerX = width / 2;
     let barWidth = 6;
     let gap = 2;
+	let binCount = floor((centerX - gap / 2) / (barWidth + gap));
     let maxHeight = height * 0.25;
-
-    // 片側に表示できる最大本数
-    let binCount = floor((centerX - gap / 2) / (barWidth + gap));
-
-    // 0～約8kHzだけを使用
-    let maxIndex = floor(fullDataL.length * 16000 / (audioCtx.sampleRate / 2));
+    const MAXHERTZ = 16000;
+    let maxIndex = floor(fullDataL.length * MAXHERTZ / (audioCtx.sampleRate / 2));
+	
 
     noStroke();
 
     for (let i = 0; i < binCount; i++) {
-
-        // 0～8kHzを均等に割り当て
         let idx = floor(i * maxIndex / (binCount - 1));
-
         // 中央ほど高く、外側ほど低くする重み
         let weight = map(i, 0, binCount - 1, 1.0, 0.30);
-
         // 再生中だけ最低高さを保証
         let minHeight = song.elt.paused ? 0 : 8;
 
         // 左
         let hL = map(fullDataL[idx], 0, 255, minHeight, maxHeight) * weight;
         let xL = centerX - gap / 2 - (i + 1) * barWidth - (i * gap);
-
         for (let y = 0; y < hL; y += 2) {
             let t = y / hL;
             let alpha = lerp(255, 26, t * t * t);
@@ -174,34 +179,36 @@ function drawVisualizer() {
 }
 
 /* 花全体の配置と描画 */
-function drawFlower(scaleFactor) {
+function drawFlower(g, scaleFactor) {
     let numPetals = 5;
-    noFill();
-    stroke(255, 255, 255, 255);
+    g.noFill();
+    g.stroke(255, 255, 255, 255);
+
     for (let i = 0; i < numPetals; i++) {
-        push();
-        rotate(TWO_PI / numPetals * i);
-        // 各パーツにスケールを適用
-        drawPetal(getPetalSize('kick') * scaleFactor);
-        drawPetal(getPetalSize('vocal1') * scaleFactor);
-        drawPetal(getPetalSize('vocal2') * scaleFactor);
-        drawPetal(getPetalSize('vocal3') * scaleFactor);
-        pop();
+        g.push();
+        g.rotate(TWO_PI / numPetals * i);
+
+        drawPetal(g, getPetalSize('kick') * scaleFactor);
+        drawPetal(g, getPetalSize('vocal1') * scaleFactor);
+        drawPetal(g, getPetalSize('vocal2') * scaleFactor);
+        drawPetal(g, getPetalSize('vocal3') * scaleFactor);
+
+        g.pop();
     }
 }
 
 /* 花びら1枚の形状定義（不変） */
-function drawPetal(size) {
-	beginShape();
-	vertex(0, 0);
-	bezierVertex(-size * 0.2, -size * 0.3, -size * 0.4, -size * 0.7, 0, -size);
-	bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
-	endShape();
+function drawPetal(g, size) {
+	g.beginShape();
+	g.vertex(0, 0);
+	g.bezierVertex(-size * 0.2, -size * 0.3, -size * 0.4, -size * 0.7, 0, -size);
+	g.bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
+	g.endShape();
 }
 
-const baseSize = 128;
+const BASESIZE = 128;
 
-const petalMap = {
+const PETALMAP = {
 	kick: {
 		hertz: [10, 15],
 		gain: [0, 255],
@@ -227,7 +234,7 @@ const petalMap = {
 /* 花びらサイズの制御 */
 function getPetalSize(type) {
 	let isPlaying = !song.elt.paused;
-	if (!isPlaying) return getBreathSize(baseSize);
+	if (!isPlaying) return getBreathSize(BASESIZE);
 	return getAudioSize(type);
 }
 
@@ -252,7 +259,7 @@ function getBreath() {
 /* 音楽によるサイズ */
 function getAudioSize(type) {
 	let val = getAudio(type);
-	let config = petalMap[type];
+	let config = PETALMAP[type];
 	return map(
 		val,
 		config.gain[0],
@@ -264,10 +271,60 @@ function getAudioSize(type) {
 
 /* 音量値 */
 function getAudio(type) {
-	let config = petalMap[type];
+	let config = PETALMAP[type];
 	if (!config) return 0;
 	return fft.getEnergy(
 		config.hertz[0],
 		config.hertz[1]
 	);
+}
+
+function updateParticles() {
+
+	let energy = fft.getEnergy(11000, 16000);
+
+	// 約1秒分の平均を取る（60fps想定）
+	energyHistory.push(energy);
+	if (energyHistory.length > 60) {
+		energyHistory.shift();
+	}
+
+	let avgEnergy = 0;
+	for (let e of energyHistory) {
+		avgEnergy += e;
+	}
+	avgEnergy /= energyHistory.length;
+
+	//textSize(20);
+	//fill(255);
+	//text(nf(avgEnergy, 1, 1), 20, 30);
+
+	// 平均音量が一定以上なら発生
+	if (!song.elt.paused && avgEnergy > 90) {
+		for (let i = 0; i < 2; i++) {
+			particles.push({
+				x: width / 2,
+				y: height / 2,
+				angle: random(TWO_PI),
+				speed: random(1, 3),
+				size: random(5, 10),
+				life: 255
+			});
+		}
+	}
+
+	noStroke();
+
+	for (let i = particles.length - 1; i >= 0; i--) {
+		let p = particles[i];
+		p.x += cos(p.angle) * p.speed;
+		p.y += sin(p.angle) * p.speed;
+		p.speed *= 0.98;
+		p.life -= 5;
+		fill(255, p.life);
+		circle(p.x, p.y, p.size);
+		if (p.life <= 0) {
+			particles.splice(i, 1);
+		}
+	}
 }
