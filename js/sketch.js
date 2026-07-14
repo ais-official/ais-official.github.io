@@ -191,21 +191,37 @@ function drawFlower(g, scaleFactor) {
         g.push();
         g.rotate(TWO_PI / numPetals * i);
 
-        drawPetal(g, getPetalSize('kick') * scaleFactor);
-        drawPetal(g, getPetalSize('vocal1') * scaleFactor);
-        drawPetal(g, getPetalSize('vocal2') * scaleFactor);
-        drawPetal(g, getPetalSize('vocal3') * scaleFactor);
+        drawPetal(g, getPetalSize('kick') * scaleFactor, getBreath());
+		drawPetal(g, getPetalSize('vocal1') * scaleFactor, getBreath());
+		drawPetal(g, getPetalSize('vocal2') * scaleFactor, getBreath());
+		drawPetal(g, getPetalSize('vocal3') * scaleFactor, getBreath());
 
         g.pop();
     }
 }
 
 /* 花びら1枚の形状定義（不変） */
-function drawPetal(g, size) {
+function drawPetal(g, size, breath) {
+	let width = lerp(1.0, 0.65 / 0.6, (breath - 1.0) / 0.1);
+
 	g.beginShape();
 	g.vertex(0, 0);
-	g.bezierVertex(-size * 0.2, -size * 0.3, -size * 0.4, -size * 0.7, 0, -size);
-	g.bezierVertex(size * 0.4, -size * 0.7, size * 0.2, -size * 0.3, 0, 0);
+	g.bezierVertex(
+		-size * 0.2 * width,
+		-size * 0.3,
+		-size * 0.6 * width,
+		-size * 0.7,
+		0,
+		-size
+	);
+	g.bezierVertex(
+		size * 0.6 * width,
+		-size * 0.7,
+		size * 0.2 * width,
+		-size * 0.3,
+		0,
+		0
+	);
 	g.endShape();
 }
 
@@ -215,22 +231,22 @@ const PETALMAP = {
 	kick: {
 		hertz: [10, 15],
 		gain: [0, 255],
-		move: [0, 128]
+		move: [0, 130]
 	},
 	vocal1: {
 		hertz: [2000, 3000],
 		gain: [0, 255],
-		move: [128, 200]
+		move: [130, 200]
 	},
 	vocal2: {
 		hertz: [3000, 5000],
 		gain: [0, 255],
-		move: [128, 200]
+		move: [130, 200]
 	},
 	vocal3: {
 		hertz: [5000, 10000],
 		gain: [0, 255],
-		move: [128, 200]
+		move: [130, 200]
 	}
 };
 
@@ -252,10 +268,10 @@ function getBreath() {
 	let phase = (speed / TWO_PI) % 1;
 	if (phase < 0.4) {
 		let t = phase / 0.4;
-		return lerp(1.0, 1.1, 0.5 - 0.5 * cos(PI * t));
+		return lerp(0.97, 1.03, 0.5 - 0.5 * cos(PI * t));
 	} else {
 		let t = (phase - 0.4) / 0.6;
-		return lerp(1.1, 1.0, 0.5 - 0.5 * cos(PI * t));
+		return lerp(1.03, 0.97, 0.5 - 0.5 * cos(PI * t));
 	}
 }
 
