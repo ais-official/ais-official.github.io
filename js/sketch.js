@@ -119,18 +119,19 @@ function draw() {
 	background(18, 18, 18, 255);
 	fft.analyze();
 
-	// 花レイヤーを少しずつ消して残像を作る
+	/* 花レイヤーを少しずつ消して残像を作る */
 	flowerLayer.background(18, 18, 18, 50);
-
 	flowerLayer.push();
 	flowerLayer.translate(width / 2, height / 2);
 	let scaleFactor = width / 400;
 	drawFlower(flowerLayer, scaleFactor);
 	flowerLayer.pop();
-
 	image(flowerLayer, 0, 0);
-	drawVisualizer();
+	/* パーティクル */
 	updateParticles();
+	/* ビジュアライザー */
+	drawVisualizer();
+	
 }
 
 function drawVisualizer() {
@@ -164,8 +165,8 @@ function drawVisualizer() {
         let xL = centerX - gap / 2 - (i + 1) * barWidth - (i * gap);
         for (let y = 0; y < hL; y += 2) {
             let t = y / hL;
-            let alpha = lerp(255, 26, t * t * t);
-            fill(255, 255, 255, alpha);
+            let alpha = lerp(200, 26, t * t * t);
+            fill(200, 200, 200, alpha);
             rect(xL, height - y, barWidth, 1);
         }
 
@@ -174,8 +175,8 @@ function drawVisualizer() {
         let xR = centerX + gap / 2 + (i * barWidth) + (i * gap);
         for (let y = 0; y < hR; y += 2) {
             let t = y / hR;
-            let alpha = lerp(255, 26, t * t * t);
-            fill(255, 255, 255, alpha);
+            let alpha = lerp(200, 26, t * t * t);
+            fill(200, 200, 200, alpha);
             rect(xR, height - y, barWidth, 1);
         }
     }
