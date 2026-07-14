@@ -116,7 +116,7 @@ function draw() {
 	fft.analyze();
 
 	// 花レイヤーを少しずつ消して残像を作る
-	flowerLayer.background(18, 18, 18, 60);
+	flowerLayer.background(18, 18, 18, 50);
 
 	flowerLayer.push();
 	flowerLayer.translate(width / 2, height / 2);
