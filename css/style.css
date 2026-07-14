@@ -200,7 +200,7 @@ footer {
 	.release {
 	    grid-template-columns: 1fr;
 	}
-	nav {
+	nav.menu {
 	    display: none;
 	}
 }
