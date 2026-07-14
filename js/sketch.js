@@ -157,7 +157,7 @@ function drawVisualizer() {
         // 中央ほど高く、外側ほど低くする重み
         let weight = map(i, 0, binCount - 1, 1.0, 0.30);
         // 再生中だけ最低高さを保証
-        let minHeight = song.elt.paused ? 0 : 8;
+        let minHeight = song.elt.paused ? 0 : 6;
 
         // 左
         let hL = map(fullDataL[idx], 0, 255, minHeight, maxHeight) * weight;
@@ -172,7 +172,6 @@ function drawVisualizer() {
         // 右
         let hR = map(fullDataR[idx], 0, 255, minHeight, maxHeight) * weight;
         let xR = centerX + gap / 2 + (i * barWidth) + (i * gap);
-
         for (let y = 0; y < hR; y += 2) {
             let t = y / hR;
             let alpha = lerp(255, 26, t * t * t);
