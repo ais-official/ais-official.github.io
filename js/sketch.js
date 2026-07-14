@@ -231,22 +231,22 @@ const PETALMAP = {
 	kick: {
 		hertz: [10, 15],
 		gain: [0, 255],
-		move: [0, 130]
+		move: [0, 70]
 	},
 	vocal1: {
 		hertz: [2000, 3000],
 		gain: [0, 255],
-		move: [130, 200]
+		move: [132, 200]
 	},
 	vocal2: {
 		hertz: [3000, 5000],
 		gain: [0, 255],
-		move: [130, 200]
+		move: [132, 200]
 	},
 	vocal3: {
 		hertz: [5000, 10000],
 		gain: [0, 255],
-		move: [130, 200]
+		move: [132, 200]
 	}
 };
 
@@ -299,25 +299,20 @@ function getAudio(type) {
 }
 
 function updateParticles() {
-
 	let energy = fft.getEnergy(11000, 16000);
-
 	// 約1秒分の平均を取る（60fps想定）
 	energyHistory.push(energy);
 	if (energyHistory.length > 60) {
 		energyHistory.shift();
 	}
-
 	let avgEnergy = 0;
 	for (let e of energyHistory) {
 		avgEnergy += e;
 	}
 	avgEnergy /= energyHistory.length;
-
 	//textSize(20);
 	//fill(255);
 	//text(nf(avgEnergy, 1, 1), 20, 30);
-
 	// 平均音量が一定以上なら発生
 	if (!song.elt.paused && avgEnergy > 90) {
 		for (let i = 0; i < 2; i++) {
