@@ -4,6 +4,7 @@ let gainNode;
 let source;
 let fft;
 let playBtn;
+let splitter, analyserL, analyserR;
 const CANVAS_MAX_SIZE = 400;
 
 /*音楽ファイル読み込み（事前に読み込み）*/
@@ -34,6 +35,16 @@ function setup() {
         // 音源をWeb Audio APIのグラフに接続
         if (!source) {
             source = audioCtx.createMediaElementSource(song.elt);
+
+			/* analyser */
+			splitter = audioCtx.createChannelSplitter(2);
+			source.connect(splitter);
+			analyserL = audioCtx.createAnalyser();
+			analyserR = audioCtx.createAnalyser();
+			splitter.connect(analyserL, 0); // L
+			splitter.connect(analyserR, 1); // R
+
+			/* flower */
             source.connect(gainNode);
             gainNode.connect(audioCtx.destination);
             
@@ -97,11 +108,55 @@ document.addEventListener("visibilitychange", () => {
 function draw() {
 	background(18, 18, 18, 255);
 	fft.analyze();
+
+	drawVisualizer();
 	push();
 	translate(width / 2, height / 2);
 	let scaleFactor = width / 400; 
     drawFlower(scaleFactor);
 	pop();
+}
+
+function drawVisualizer() {
+    if (!analyserL || !analyserR) return;
+
+    let fullDataL = new Uint8Array(analyserL.frequencyBinCount);
+    let fullDataR = new Uint8Array(analyserR.frequencyBinCount);
+    analyserL.getByteFrequencyData(fullDataL);
+    analyserR.getByteFrequencyData(fullDataR);
+
+    let binCount =  25;
+    let centerX = width / 2;
+    let barWidth = 6;
+    let gap =  2;
+	let maxHeight = height * 0.20;
+	let minHeight = song.elt.paused ? 0 : 8;
+
+    noStroke();
+    
+    for (let i = 0; i < binCount; i++) {
+        let idx = i * 20;
+        // 中央ほど高く、外側ほど低くする重み
+        let weight = map(i, 0, binCount - 1, 1.0, 0.30);
+        // 左
+        let hL = map(fullDataL[idx], 0, 255, minHeight, maxHeight) * weight;
+        let xL = centerX - gap / 2 - (i + 1) * barWidth - (i * gap);
+        for (let y = 0; y < hL; y += 2) {
+			let t = y / hL;
+			let alpha = lerp(255, 26, t * t);
+			fill(255, 255, 255, alpha);
+			rect(xL, height - y, barWidth, 1);
+		}
+        // 右
+        let hR = map(fullDataR[idx], 0, 255, minHeight, maxHeight) * weight;
+        let xR = centerX + gap / 2 + (i * barWidth) + (i * gap);
+        for (let y = 0; y < hR; y += 2) {
+			let t = y / hR;
+			let alpha = lerp(255, 26, t * t);
+			fill(255, 255, 255, alpha);
+			rect(xR, height - y, barWidth, 1);
+		}
+    }
 }
 
 /* 花全体の配置と描画 */
