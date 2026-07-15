@@ -25,7 +25,7 @@ function setup() {
 	canvas.parent('p5-canvas');
 
     fft = new p5.FFT();
-    playBtn = select('#play-btn');
+    playBtn = document.getElementById('play-btn');
 
 	// 1. AudioContextの作成（Web Audio APIの入り口）
     audioCtx = getAudioContext();
@@ -37,7 +37,7 @@ function setup() {
     song.elt.load();
 
 	song.elt.onended = () => {
-		playBtn.html('▶\uFE0E');
+		playBtn.textContent = "play_arrow";
 	};
     
     song.elt.oncanplaythrough = () => {
@@ -58,12 +58,12 @@ function setup() {
             gainNode.connect(audioCtx.destination);
             
             fft.setInput(gainNode); // FFTをこのルートに繋ぐ
-            playBtn.removeAttribute('disabled');
-            playBtn.elt.textContent = '▶\uFE0E';
+            playBtn.disabled = false;
+            playBtn.textContent = "play_arrow";
         }
     };
 
-    playBtn.mousePressed(togglePlay);
+    playBtn.addEventListener('click', togglePlay);
     background(18, 18, 18);
 	flowerLayer = createGraphics(width, height);
 }
@@ -86,7 +86,7 @@ function togglePlay() {
             gainNode.gain.linearRampToValueAtTime(1, now + 3); // 2秒でフェードイン
 
             song.play();
-            playBtn.html('■\uFE0E');
+            playBtn.textContent = "pause";
         } else {
             // フェードアウトのスケジュール
             let now = audioCtx.currentTime;
@@ -95,7 +95,7 @@ function togglePlay() {
             gainNode.gain.linearRampToValueAtTime(0, now + 0.5); // 0.5秒でフェードアウト
             
             setTimeout(() => song.pause(), 500);
-            playBtn.html('▶\uFE0E');
+            playBtn.textContent = "play_arrow";
         }
     });
 }
@@ -106,7 +106,7 @@ document.addEventListener("visibilitychange", () => {
 		song.pause();
 		song.elt.currentTime = 0;
 		song.elt.load();
-		playBtn.html('▶\uFE0E');
+		playBtn.textContent = "play_arrow";
 	}
 });
 
