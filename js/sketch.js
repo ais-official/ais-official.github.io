@@ -14,7 +14,7 @@ const CANVAS_MAX_SIZE = 400;
 
 /*音楽ファイル読み込み（事前に読み込み）*/
 function preload() {
-	//song = loadSound('./audio/tokyo.m4a');
+	//song = loadSound('/audio/tokyo.m4a');
 }
 
 /*キャンバスの作成、HTMLの箱への配置、ボタンの連動など、動かすための準備を行う。*/
@@ -33,7 +33,7 @@ function setup() {
     gainNode.gain.value = 0; // 最初は無音
 
     // 2. 音源の作成と接続
-    song = createAudio('./audio/tokyo.m4a');
+    song = createAudio('/audio/tokyo.m4a');
     song.elt.load();
 
 	song.elt.onended = () => {
