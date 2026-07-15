@@ -8,6 +8,7 @@ let flowerLayer;
 let energyHistory = [];
 let particles = [];
 let prevEnergy = 0;
+let flowerHistory = [];
 let splitter, analyserL, analyserR;
 const CANVAS_MAX_SIZE = 400;
 
@@ -36,7 +37,7 @@ function setup() {
     song.elt.load();
 
 	song.elt.onended = () => {
-		resetButton();
+		playBtn.html('▶');
 	};
     
     song.elt.oncanplaythrough = () => {
@@ -74,11 +75,6 @@ function windowResized() {
 	flowerLayer = createGraphics(width, height);
 }
 
-// 音楽終了時に呼び出される関数
-function resetButton() {
-	playBtn.html('▶');
-}
-
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
     userStartAudio().then(() => {
@@ -104,7 +100,7 @@ function togglePlay() {
     });
 }
 
-// ブラウザが「画面が戻ってきた」ことを検知する関数
+/* ブラウザが再びアクティブになったことを検知する関数 */
 document.addEventListener("visibilitychange", () => {
 	if (document.visibilityState !== "visible") {
 		song.pause();
@@ -120,12 +116,42 @@ function draw() {
 	fft.analyze();
 
 	/* 花レイヤーを少しずつ消して残像を作る */
-	flowerLayer.background(18, 18, 18, 50);
-	flowerLayer.push();
-	flowerLayer.translate(width / 2, height / 2);
+	flowerLayer.clear();
+
 	let scaleFactor = width / 400;
-	drawFlower(flowerLayer, scaleFactor);
-	flowerLayer.pop();
+
+	// 現在の花の状態を保存
+	flowerHistory.push({
+		kick: getPetalSize('kick'),
+		vocal1: getPetalSize('vocal1'),
+		vocal2: getPetalSize('vocal2'),
+		vocal3: getPetalSize('vocal3'),
+		breath: getBreath()
+	});
+
+	// 残像数
+	if (flowerHistory.length > 7) {
+		flowerHistory.shift();
+	}
+
+	// 古いものから描画
+	for (let i = 0; i < flowerHistory.length; i++) {
+		let f = flowerHistory[i];
+		let alpha = (flowerHistory.length === 1) ? 255 : map(i, 0, flowerHistory.length - 1, 15, 255);
+
+		flowerLayer.push();
+		flowerLayer.translate(width / 2, height / 2);
+
+		drawFlower(
+			flowerLayer,
+			scaleFactor,
+			f,
+			alpha
+		);
+
+		flowerLayer.pop();
+	}
+
 	image(flowerLayer, 0, 0);
 	/* パーティクル */
 	updateParticles();
@@ -158,7 +184,7 @@ function drawVisualizer() {
         // 中央ほど高く、外側ほど低くする重み
         let weight = map(i, 0, binCount - 1, 1.0, 0.30);
         // 再生中だけ最低高さを保証
-        let minHeight = song.elt.paused ? 0 : 6;
+        let minHeight = song.elt.paused ? 0 : 8;
 
         // 左
         let hL = map(fullDataL[idx], 0, 255, minHeight, maxHeight) * weight;
@@ -183,22 +209,21 @@ function drawVisualizer() {
 }
 
 /* 花全体の配置と描画 */
-function drawFlower(g, scaleFactor) {
-    let numPetals = 5;
+function drawFlower(g, scaleFactor, state, alpha) {
     g.noFill();
-    g.stroke(255, 255, 255, 255);
+	g.stroke(255, alpha);
 
-    for (let i = 0; i < numPetals; i++) {
-        g.push();
-        g.rotate(TWO_PI / numPetals * i);
+	for (let i = 0; i < 5; i++) {
+		g.push();
+		g.rotate(TWO_PI / 5 * i);
 
-        drawPetal(g, getPetalSize('kick') * scaleFactor, getBreath());
-		drawPetal(g, getPetalSize('vocal1') * scaleFactor, getBreath());
-		drawPetal(g, getPetalSize('vocal2') * scaleFactor, getBreath());
-		drawPetal(g, getPetalSize('vocal3') * scaleFactor, getBreath());
+		drawPetal(g, state.kick * scaleFactor, state.breath);
+		drawPetal(g, state.vocal1 * scaleFactor, state.breath);
+		drawPetal(g, state.vocal2 * scaleFactor, state.breath);
+		drawPetal(g, state.vocal3 * scaleFactor, state.breath);
 
-        g.pop();
-    }
+		g.pop();
+	}
 }
 
 /* 花びら1枚の形状定義（不変） */
@@ -232,20 +257,20 @@ const PETALMAP = {
 	kick: {
 		hertz: [10, 15],
 		gain: [0, 255],
-		move: [0, 70]
+		move: [0, 132]
 	},
 	vocal1: {
-		hertz: [2000, 3000],
+		hertz: [500, 1000],
 		gain: [0, 255],
 		move: [132, 200]
 	},
 	vocal2: {
-		hertz: [3000, 5000],
+		hertz: [1000, 3000],
 		gain: [0, 255],
 		move: [132, 200]
 	},
 	vocal3: {
-		hertz: [5000, 10000],
+		hertz: [3000, 10000],
 		gain: [0, 255],
 		move: [132, 200]
 	}
