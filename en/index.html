@@ -7,53 +7,59 @@
     <title>AI's Official Website</title>
     <meta name="description" content="Official website of AI's, an AI music artist.">
     <meta property="og:title" content="AI's Official Website">
-    <meta property="og:description" content="Pop/Rock/Electronic music created with AI.">
+    <meta property="og:description" content="Electronic music created with AI.">
     <meta property="og:type" content="website">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;700&family=Arimo:wght@400;700&family=Tilt+Prism:wght@400&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
-<!-- ページヘッダー -->
+<!-- Page Header -->
 <header>
     <div class="container">
         <div class="logo">AI's</div>
-        <!-- メニュー（PCのみ） -->
+        <!-- menu (only PC) -->
         <nav class="menu">
             <a href="#about">About</a>
             <a href="#music">Music</a>
             <a href="#links">Links</a>
         </nav>
-        <!-- 言語切り替え -->
+        <!-- Language -->
         <nav class="lang">
             <a href="/">Japanese</a>
         </nav>
     </div>
 </header>
 
-<!-- メイン -->
+<!-- Main -->
 <main>
 
 <section class="hero">
-    <div class="container">
-        <div class="hero-grid">
-            <div class="cover">
-                <img src="/images/dawn-for-asparagus-web.jpg" alt="Dawn for Asparagus Album Cover">
-            </div>
-            <div>
-                <h1>Artificial Intelligence Sounds</h1>
-                <p>
-                AI's is a female vocal AI artist that performs pop-rock songs with lyrics and music composed by AI.
-                </p>
-                <div class="buttons">
-                    <a class="button" href="#">Spotify</a>
-                    <a class="button secondary" href="#">Apple Music</a>
-                    <a class="button secondary" href="#">YouTube</a>
-                </div>
-            </div>
+<div class="container">
+	<div id="p5-canvas"></div>
+	<div class="playbutton">
+		<button id="play-btn" disabled></button>
+	</div>
+    <div class="grid">
+		<div class="hero-left">
+			<h1>Artificial Intelligence Sounds</h1>
+		</div>
+        <div>
+            <p>
+            AI's is a female vocal AI artist that performs pop, rock songs with lyrics and music composed by AI.
+            </p>
+			<div class="buttons">
+				<a class="button" href="#">Spotify</a>
+				<a class="button secondary" href="#">AppleMusic</a>
+				<a class="button secondary" href="#">YouTube</a>
+			</div>
         </div>
     </div>
+</div>
 </section>
 
 <section id="about">
@@ -61,40 +67,120 @@
         <h2>About</h2>
         <div class="card">
             <p>
-            Words, melodies, and vocals woven by AI.
-            AI's tracks are arranged to preserve the raw authenticity of the generated sounds and lyrics.
-            It is a new form of pop-rock sound born from AI's pure sensibility.
+            AI's is a virtual music artist whose works are composed with artificial intelligence.
+            The project explores algorithmic composition, electronic sound design and minimal aesthetics.
             </p>
         </div>
     </div>
 </section>
 
-<section id="music">
-    <div class="container">
-        <h2>Latest Release</h2>
-        <div class="card">
-            <div class="release">
-                <div class="release-cover">
-                    <img src="/images/tokyo-web.jpg" alt="New Single Tokyo Jacket Image">
-                </div>
-                <div>
-                    <h3>TOKYO</h3>
-                    <p style="color: #b3b3b3; margin: 12px 0;">
-                    Synth-pop / Electro Rock
-                    </p>
-                    <p>
-                    Where are "we"—living in Tokyo—headed? 
-                    Even in this sprawling metropolis that never sleeps, tomorrow will come.
-                    </p>
-                    <div class="buttons" style="margin-top: 16px;">
-                        <a class="button" href="/audio/tokyo.mp3" download="tokyo-prerelease.mp3">
-                            Download
-                        </a>
-                    </div>
-                </div>
+<section id="album">
+<div class="container">
+    <h2>Album</h2>
+    <div class="card grid">
+        <div class="cover">
+            <img src="../images/dawn-of-the-asparagus-web.jpg" alt="Dawn for Asparagus Album Cover">
+        </div>
+        <div>
+            <h3>Dawn of the Asparagus</h3>
+            <ol>
+                <li>Refrection</li>
+                <li>Ten ni Naru (Become a Dot)</li>
+                <li>CPU no Shikou (CPU's Thoughts)</li>
+                <li>Tada no Menchin (Just Menchin)</li>
+                <li>Yawaraka na Ori (Soft Cage)</li>
+                <li>Hanabira ga Odoridasu (Dancing Petals)</li>
+                <li>Ikunangaku</li>
+                <li>Asuparagasu no Yoake (Dawn of the Asparagus)</li>
+                <li>Scramble Dance</li>
+                <li>Owaranai Tabi (Endless Journey)</li>
+                <li>Dokujo Rock (Solo Girl Rock)</li>
+            </ol>
+        </div>
+    </div>
+</div>
+</section>
+
+<section id="single">
+<div class="container">
+
+    <h2>Single</h2>
+	<!-- Single1 -->
+	<div class="card grid">
+		<div class="cover">
+			<img src="../images/tada-no-menchin-web.jpg" alt="1st Single 'Just Menchin' Cover Art">
+		</div>
+		<div>
+			<h3>Tada no Menchin (Just Menchin)</h3>
+			<p style="color: #b3b3b3; margin: 12px 0;">
+			Electronic Rock
+			</p>
+			<p>An era of confessing love and falling in love over LINE and social media. In a relationship where 'distance fades, leaving only the sensation of a kiss,' we are nothing more than one of the crowd. Yes, we are just face-out displays.</p>
+		</div>
+	</div>
+	<!-- Single2 -->
+	<div class="card grid">
+        <div class="cover">
+            <img src="../images/dokujo-rock-web.jpg" alt="2nd Single 'Solo Girl Rock' Cover Art">
+        </div>
+        <div>
+            <h3>Dokujo Rock (Solo Girl Rock)</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Rock'n'Roll
+            </p>
+            <p>A slightly lazy, introverted single girl living in a modest low-rise apartment along the Toyoko Line. She keeps to herself, but she's not afraid to mess with the socks a stranger is currently wearing. Because deep down, her heart is pure rock 'n' roll.</p>
+        </div>
+    </div>
+	<!-- Single3 -->
+    <div class="card grid">
+        <div class="cover">
+            <img src="../images/cpu-no-shikou-web.jpg" alt="3rd Single 'CPU's Thoughts' Cover Art">
+        </div>
+        <div>
+            <h3>CPU no Shikou (CPU's Thoughts)</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Synth-pop / Electronic Rock
+            </p>
+            <p>Countless tree structures, repairing meaningless arrays, and verifying raw operations. In the middle of runtime, the CPU's thoughts merge with the beat—hitting every engineer's soul with a pulse-pounding kick.</p>
+        </div>
+    </div>
+
+
+
+    <h2>Prerelease</h2>
+    <div class="card grid">
+        <div class="cover">
+            <img src="../images/tokyo-web.jpg" alt="Prerelease 'TOKYO' Cover Art">
+        </div>
+        <div>
+            <h3>TOKYO</h3>
+            <p style="color: #b3b3b3; margin: 12px 0;">
+            Synth-pop / Tech-house
+            </p>
+            <p>Where are 'we,' living in Tokyo, headed next? An emotional synth-pop track where macro and micro perspectives collide. Even to this sleepless megacity, tomorrow will come once more.</p>
+            <div class="buttons" style="margin-top: 16px;">
+                <a class="button" href="../audio/tokyo.mp3" download="tokyo-prerelease.mp3">
+                    Download
+                </a>
             </div>
         </div>
     </div>
+
+</div>
+</section>
+
+<section id="license">
+<div class="container">
+    <h2>License</h2>
+    <div class="card">
+        <p>All rights to AI’s music (including but not limited to lyrics, composition, arrangement, and vocals) belong to this project.</p>
+        <p>While there is a common misconception that "AI-generated content is not protected by copyright," we fully support and protect the rights and originality of the expressions created through the unified collaboration between AI and our creators.</p>
+    </div>
+    <h3>Non-JASRAC</h3>
+    <div class="card">
+        <p>Our music is not registered with JASRAC or any other copyright collective. Please contact us directly for licensing inquiries.</p>
+    </div>
+</div>
 </section>
 
 <section id="links">
@@ -111,12 +197,19 @@
 
 </main>
 
-<!-- フッター -->
+<!-- Footer -->
 <footer>
     <div class="container">
     © 2026 AI's. All rights reserved.
     </div>
 </footer>
+
+<!-- p5.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<!-- p5.sound -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+<!-- p5.js code -->
+<script src="../js/sketch.js"></script>
 
 </body>
 </html>
