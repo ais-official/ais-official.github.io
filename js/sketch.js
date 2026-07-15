@@ -37,7 +37,7 @@ function setup() {
     song.elt.load();
 
 	song.elt.onended = () => {
-		playBtn.html('▶');
+		playBtn.html('▶\uFE0E');
 	};
     
     song.elt.oncanplaythrough = () => {
@@ -59,7 +59,7 @@ function setup() {
             
             fft.setInput(gainNode); // FFTをこのルートに繋ぐ
             playBtn.removeAttribute('disabled');
-            playBtn.elt.textContent = '▶';
+            playBtn.elt.textContent = '▶\uFE0E';
         }
     };
 
@@ -86,7 +86,7 @@ function togglePlay() {
             gainNode.gain.linearRampToValueAtTime(1, now + 3); // 2秒でフェードイン
 
             song.play();
-            playBtn.html('■');
+            playBtn.html('■\uFE0E');
         } else {
             // フェードアウトのスケジュール
             let now = audioCtx.currentTime;
@@ -95,7 +95,7 @@ function togglePlay() {
             gainNode.gain.linearRampToValueAtTime(0, now + 0.5); // 0.5秒でフェードアウト
             
             setTimeout(() => song.pause(), 500);
-            playBtn.html('▶');
+            playBtn.html('▶\uFE0E');
         }
     });
 }
@@ -106,7 +106,7 @@ document.addEventListener("visibilitychange", () => {
 		song.pause();
 		song.elt.currentTime = 0;
 		song.elt.load();
-		playBtn.html('▶');
+		playBtn.html('▶\uFE0E');
 	}
 });
 
