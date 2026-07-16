@@ -165,9 +165,7 @@ button.button {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--text);
-  border: none;
-  transform: scale(0.25);
+  background: radial-gradient(circle, var(--text) 4px, transparent 5px);
 }
 /* Firefox用 */
 .volume-ctrl::-moz-range-thumb {
@@ -175,9 +173,7 @@ button.button {
   height: 32px;
   border-radius: 50%;
   background: var(--text);
-  border: none;
-  transform: scale(0.25);
-  cursor: pointer;
+  background: radial-gradient(circle, var(--text) 4px, transparent 5px);
 }
 
 .grid {
