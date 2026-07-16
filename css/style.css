@@ -152,11 +152,11 @@ button.button {
   position: absolute;
   right: 0;
   bottom: 0.3rem; /* 再生ボタン縦軸2remの中央の位置 */
-  width: 80px;
+  width: 112px;
   height: 1px;
   background: #444444;
   outline: none;
-  border-radius: 1px;
+  background: linear-gradient(to right, #444444, #444444) no-repeat center / 80px 1px;
 }
 /* つまみ（丸いポッチ）の色とサイズ */
 .volume-ctrl::-webkit-slider-thumb {
