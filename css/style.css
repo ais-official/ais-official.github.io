@@ -107,11 +107,74 @@ nav a:hover {
     aspect-ratio: 1;
     margin-left: auto;
     margin-right: auto;
+	/* ボタンとスライダーの配置 */
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #p5-canvas canvas {
     display: block;
     width: 100% !important;
     height: auto !important;
+}
+
+/* --- プレイボタン（中央に居座り、自然にレイアウトの高さをキープする） --- */
+#play-btn {
+	visibility: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+	border: none;
+    color: var(--text);
+    font-family: 'Material Symbols Rounded';
+    font-size: 1.2rem;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	line-height: 1;
+    height: 1rem; /* 高さを明示 */
+	margin-top: 1rem;
+}
+button:focus {
+    outline: none;
+}
+button.button {
+	-webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    border: none;
+}
+
+/* ボリュームスライダー */
+.volume-ctrl {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  right: 0;
+  bottom: 0.3rem; /* 再生ボタン縦軸2remの中央の位置 */
+  width: 80px;
+  height: 1px;
+  background: #444444;
+  outline: none;
+  border-radius: 1px;
+}
+/* つまみ（丸いポッチ）の色とサイズ */
+.volume-ctrl::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text);
+  border: none;
+}
+/* Firefox用 */
+.volume-ctrl::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text);
+  border: none;
 }
 
 .grid {
@@ -124,38 +187,6 @@ nav a:hover {
     color: var(--sub);
     margin-bottom: 28px;
     max-width: 650px;
-}
-
-/*プレイボタン*/
-.playbutton {
-	width: 100%;
-	text-align: center;
-	margin-left: auto;
-    margin-right: auto;
-}
-button:focus {
-	outline: none;
-}
-button.button {
-	box-shadow: none;
-	border: none;
-	-webkit-appearance: none;
-	appearance: none;
-  }
-#play-btn {
-	/*display: inline-block;*/
-    vertical-align: middle;
-	background-color: #121212;
-	color: white;
-    text-rendering: optimizeLegibility;
-    -webkit-text-stroke: 0px transparent; 
-    text-shadow: none;
-    font-family: 'Material Symbols Rounded';
-	font-size: 1.2rem;
-	font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-	padding: 0;
-	margin: 0;
-	border: none;
 }
 
 /*ボタン*/
