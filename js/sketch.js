@@ -93,7 +93,7 @@ function windowResized() {
 }
 
 function getVolumeGain(value) {
-	return value ** 1.6;
+	return value ** 2;
 }
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
