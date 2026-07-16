@@ -5,6 +5,7 @@ let source;
 let fft;
 let playBtn;
 let volumeSlider;
+let isFading = false;
 let flowerLayer;
 let energyHistory = [];
 let particles = [];
@@ -93,7 +94,7 @@ function togglePlay() {
     userStartAudio().then(() => {
 
 		let targetVolume = volumeSlider.value(); // ★ 現在のスライダーの値を取得
-
+		isFading = true;
         if (song.elt.paused) {
 			volumeSlider.show();
             // フェードインのスケジュール
@@ -101,6 +102,9 @@ function togglePlay() {
             gainNode.gain.cancelScheduledValues(now);
             gainNode.gain.setValueAtTime(0, now);
             gainNode.gain.linearRampToValueAtTime(targetVolume, now + 3); // 2秒でフェードイン
+			setTimeout(() => {
+				isFading = false;
+			}, 3000);
 
             song.play();
             playBtn.html("pause");
@@ -111,6 +115,10 @@ function togglePlay() {
             gainNode.gain.cancelScheduledValues(now);
             gainNode.gain.setValueAtTime(gainNode.gain.value, now);
             gainNode.gain.linearRampToValueAtTime(0, now + 0.5); // 0.5秒でフェードアウト
+			setTimeout(() => {
+				song.pause();
+				isFading = false;
+			}, 500);
             
             setTimeout(() => song.pause(), 500);
             playBtn.html("play_arrow");
@@ -131,13 +139,11 @@ document.addEventListener("visibilitychange", () => {
 
 /* 毎フレームの制御（全体構成） */
 function draw() {
-
-	// ★ ユーザーがスライダーを動かした時に即座に音量へ反映させる処理（再生中のみ）
-    if (audioCtx && gainNode && !song.elt.paused) {
-        let now = audioCtx.currentTime;
-        // フェードインの途中でスライダーが動かされた場合も考慮し、緩やかに追従させる
-        gainNode.gain.linearRampToValueAtTime(volumeSlider.value(), now + 0.05);
-    }
+	/* ユーザーがスライダーを動かした時に即座に音量へ反映させる処理（再生中のみ） */
+    if (audioCtx && gainNode && !song.elt.paused && !isFading) {
+		let now = audioCtx.currentTime;
+		gainNode.gain.linearRampToValueAtTime(volumeSlider.value(), now + 0.05);
+	}
 
 	background(18, 18, 18, 255);
 	fft.analyze();
