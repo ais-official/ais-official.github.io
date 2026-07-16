@@ -34,7 +34,7 @@ function setup() {
     playBtn.style('visibility', 'hidden');
 
 	/* createSlider(最小値, 最大値, 初期値, ステップ) */
-    volumeSlider = createSlider(0.05, 1.0, 0.05, 0.01);
+    volumeSlider = createSlider(0.1, 1.0, 0.1, 0.01);
     volumeSlider.parent('p5-canvas'); // canvasの下部に配置
     volumeSlider.addClass('volume-ctrl'); // CSSのスタイルを適用
     volumeSlider.hide();
@@ -92,11 +92,15 @@ function windowResized() {
 	flowerLayer = createGraphics(width, height);
 }
 
+function getVolumeGain(value) {
+	return value ** 1.4;
+}
+
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
     userStartAudio().then(() => {
 
-		let targetVolume = volumeSlider.value(); // ★ 現在のスライダーの値を取得
+		let targetVolume = getVolumeGain(volumeSlider.value()); // 現在のスライダーの値を取得
 		isFading = true;
         if (song.elt.paused) {
 			volumeSlider.show();
@@ -145,7 +149,10 @@ function draw() {
 	/* ユーザーがスライダーを動かした時に即座に音量へ反映させる処理（再生中のみ） */
     if (audioCtx && gainNode && !song.elt.paused && !isFading) {
 		let now = audioCtx.currentTime;
-		gainNode.gain.linearRampToValueAtTime(volumeSlider.value(), now + 0.05);
+		gainNode.gain.linearRampToValueAtTime(
+			getVolumeGain(volumeSlider.value()),
+			now + 0.05
+		);
 	}
 
 	background(18, 18, 18, 255);
