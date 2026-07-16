@@ -4,6 +4,7 @@ let gainNode;
 let source;
 let fft;
 let playBtn;
+let volumeSlider;
 let flowerLayer;
 let energyHistory = [];
 let particles = [];
@@ -25,7 +26,17 @@ function setup() {
 	canvas.parent('p5-canvas');
 
     fft = new p5.FFT();
-    playBtn = document.getElementById('play-btn');
+	/* 再生ボタンの動的生成 */
+   	playBtn = createButton('play_arrow');
+    playBtn.parent('p5-canvas');
+    playBtn.id('play-btn');
+    playBtn.style('visibility', 'hidden');
+
+	/* createSlider(最小値, 最大値, 初期値, ステップ) */
+    volumeSlider = createSlider(0.1, 1, 0.3, 0.01);
+    volumeSlider.parent('p5-canvas'); // canvasの下部に配置
+    volumeSlider.addClass('volume-ctrl'); // CSSのスタイルを適用
+    volumeSlider.hide();
 
 	// 1. AudioContextの作成（Web Audio APIの入り口）
     audioCtx = getAudioContext();
@@ -37,8 +48,9 @@ function setup() {
     song.elt.load();
 
 	song.elt.onended = () => {
-		playBtn.textContent = "play_arrow";
-	};
+        playBtn.html("play_arrow");
+        volumeSlider.hide(); // 曲が終わったら隠す
+    };
     
     song.elt.oncanplaythrough = () => {
         // 音源をWeb Audio APIのグラフに接続
@@ -58,12 +70,13 @@ function setup() {
             gainNode.connect(audioCtx.destination);
             
             fft.setInput(gainNode); // FFTをこのルートに繋ぐ
-            playBtn.disabled = false;
-            playBtn.textContent = "play_arrow";
+
+            playBtn.style('visibility', 'visible');
+            playBtn.html("play_arrow");
         }
     };
 
-    playBtn.addEventListener('click', togglePlay);
+    playBtn.mousePressed(togglePlay);
     background(18, 18, 18);
 	flowerLayer = createGraphics(width, height);
 }
@@ -78,16 +91,21 @@ function windowResized() {
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
 function togglePlay() {
     userStartAudio().then(() => {
+
+		let targetVolume = volumeSlider.value(); // ★ 現在のスライダーの値を取得
+
         if (song.elt.paused) {
+			volumeSlider.show();
             // フェードインのスケジュール
             let now = audioCtx.currentTime;
             gainNode.gain.cancelScheduledValues(now);
             gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(1, now + 3); // 2秒でフェードイン
+            gainNode.gain.linearRampToValueAtTime(targetVolume, now + 3); // 2秒でフェードイン
 
             song.play();
-            playBtn.textContent = "pause";
+            playBtn.html("pause");
         } else {
+			volumeSlider.hide();
             // フェードアウトのスケジュール
             let now = audioCtx.currentTime;
             gainNode.gain.cancelScheduledValues(now);
@@ -95,7 +113,7 @@ function togglePlay() {
             gainNode.gain.linearRampToValueAtTime(0, now + 0.5); // 0.5秒でフェードアウト
             
             setTimeout(() => song.pause(), 500);
-            playBtn.textContent = "play_arrow";
+            playBtn.html("play_arrow");
         }
     });
 }
@@ -106,12 +124,21 @@ document.addEventListener("visibilitychange", () => {
 		song.pause();
 		song.elt.currentTime = 0;
 		song.elt.load();
-		playBtn.textContent = "play_arrow";
+		playBtn.html("play_arrow");
+        volumeSlider.hide();
 	}
 });
 
 /* 毎フレームの制御（全体構成） */
 function draw() {
+
+	// ★ ユーザーがスライダーを動かした時に即座に音量へ反映させる処理（再生中のみ）
+    if (audioCtx && gainNode && !song.elt.paused) {
+        let now = audioCtx.currentTime;
+        // フェードインの途中でスライダーが動かされた場合も考慮し、緩やかに追従させる
+        gainNode.gain.linearRampToValueAtTime(volumeSlider.value(), now + 0.05);
+    }
+
 	background(18, 18, 18, 255);
 	fft.analyze();
 
@@ -140,16 +167,9 @@ function draw() {
 		let alpha = (flowerHistory.length === 1) ? 255 : map(i, 0, flowerHistory.length - 1, 15, 255);
 
 		flowerLayer.push();
-		flowerLayer.translate(width / 2, height / 2);
-
-		drawFlower(
-			flowerLayer,
-			scaleFactor,
-			f,
-			alpha
-		);
-
-		flowerLayer.pop();
+        flowerLayer.translate(width / 2, height / 2);
+        drawFlower(flowerLayer, scaleFactor, f, alpha);
+        flowerLayer.pop();
 	}
 
 	image(flowerLayer, 0, 0);
