@@ -162,19 +162,22 @@ button.button {
 .volume-ctrl::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 8px;
-  height: 8px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--text);
   border: none;
+  transform: scale(0.25);
 }
 /* Firefox用 */
 .volume-ctrl::-moz-range-thumb {
-  width: 8px;
-  height: 8px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--text);
   border: none;
+  transform: scale(0.25);
+  cursor: pointer;
 }
 
 .grid {
