@@ -34,7 +34,7 @@ function setup() {
     playBtn.style('visibility', 'hidden');
 
 	/* createSlider(最小値, 最大値, 初期値, ステップ) */
-    volumeSlider = createSlider(0.1, 1.0, 0.1, 0.01);
+    volumeSlider = createSlider(0.1, 1.0, 0.2, 0.01);
     volumeSlider.parent('p5-canvas'); // canvasの下部に配置
     volumeSlider.addClass('volume-ctrl'); // CSSのスタイルを適用
     volumeSlider.hide();
@@ -93,7 +93,7 @@ function windowResized() {
 }
 
 function getVolumeGain(value) {
-	return value ** 1.4;
+	return value ** 1.6;
 }
 
 /*音楽が鳴っていれば一時停止し、止まっていれば再生する。同時にボタンを切り替える。*/
