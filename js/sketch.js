@@ -54,28 +54,31 @@ function setup() {
     };
     
     song.elt.oncanplaythrough = () => {
-        // 音源をWeb Audio APIのグラフに接続
-        if (!source) {
-            source = audioCtx.createMediaElementSource(song.elt);
+		// 音源をWeb Audio APIのグラフに接続
+		if (!source) {
+			source = audioCtx.createMediaElementSource(song.elt);
 
-			/* analyser */
+			/* 音声出力 */
+			source.connect(gainNode);
+			gainNode.connect(audioCtx.destination);
+
+			/* FFT（花の解析用） */
+			fft.setInput(gainNode);
+
+			/* アナライザー（ビジュアライザー用） */
 			splitter = audioCtx.createChannelSplitter(2);
-			source.connect(splitter);
+			gainNode.connect(splitter);
+
 			analyserL = audioCtx.createAnalyser();
 			analyserR = audioCtx.createAnalyser();
+
 			splitter.connect(analyserL, 0); // L
 			splitter.connect(analyserR, 1); // R
 
-			/* flower */
-            source.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            fft.setInput(gainNode); // FFTをこのルートに繋ぐ
-
-            playBtn.style('visibility', 'visible');
-            playBtn.html("play_arrow");
-        }
-    };
+			playBtn.style('visibility', 'visible');
+			playBtn.html("play_arrow");
+		}
+	};
 
     playBtn.mousePressed(togglePlay);
     background(18, 18, 18);
