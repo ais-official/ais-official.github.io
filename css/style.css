@@ -195,7 +195,7 @@ button.button {
 .buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.7rem;
+    gap: 0.6rem;
 }
 .button {
     border-radius: 999px;
@@ -203,7 +203,7 @@ button.button {
     color: #fff;
     font-weight: 700;
 	outline: none;
-	padding: 0.5rem 1rem;
+	padding: 0.4rem 1rem;
 }
 .button.secondary {
     background: var(--surface);
