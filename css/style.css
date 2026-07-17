@@ -134,7 +134,7 @@ nav a:hover {
     color: var(--text);
     font-family: 'Material Symbols Rounded';
     font-size: 1.2rem;
-    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' -25, 'opsz' 24;
 	line-height: 1;
     height: 1rem; /* 高さを明示 */
 	margin-top: 1rem;
@@ -155,7 +155,7 @@ button.button {
   appearance: none;
   position: absolute;
   right: 0;
-  bottom: 0.3rem; /* 再生ボタン縦軸2remの中央の位置 */
+  bottom: 0.2rem; /* 再生ボタン縦軸2remの中央の位置 */
   width: 112px;
   height: 1px;
   background: #444444;
