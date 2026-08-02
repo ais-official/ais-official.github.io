@@ -49,6 +49,7 @@ h2 {
 h3 {
 	font-size: 1.4rem;
 	line-height: 1.5;
+	margin-top: 0;
 }
 
 /*カード*/
@@ -184,7 +185,7 @@ button.button {
     display: grid;
     grid-template-columns: 320px 1fr;
     gap: 1rem;
-    align-items: center;
+    align-items: start;
 }
 .hero p {
     margin-bottom: 28px;
