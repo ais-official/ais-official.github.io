@@ -252,11 +252,13 @@ footer {
 	flex-direction: column;
 }
 .text-main {
+	font-family: 'Inter', sans-serif;
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 1.2;
 }
 .text-sub {
+	font-family: 'Inter', sans-serif;
 	font-size: 12px;
 	letter-spacing: 1px;
 }
