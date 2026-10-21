@@ -238,7 +238,7 @@ footer {
 .footer-right {
 	display: flex;
 	align-items: center;
-	gap: 8px; /* アイコンと文字の間隔 */
+	gap: 6px; /* アイコンと文字の間隔 */
 }
 .barber-icon {
     display: flex;           /* 画像の余計な下部隙間を消すため */
@@ -252,12 +252,20 @@ footer {
 }
 .barber-text {
 	color: #fff;
-	font: bold 18px 'Inter', sans-serif;
+	font-family: 'Inter', sans-serif;
+	font-weight: bold;
 	display: flex; /* 2. 文字エリアを縦並びにする */
 	flex-direction: column;
 	justify-content: center;
 }
-.text-main, .text-sub {
+.text-main {
+	font-size: 17px;
+	letter-spacing: 1px;
+	line-height: 1.2;
+	text-align: left;
+}
+.text-sub {
+	font-size: 14px;
 	letter-spacing: 1px;
 	line-height: 1.2;
 	text-align: left;
